@@ -2265,6 +2265,58 @@ is_wet, velocityX, velocityY, velocityZ = bliz.ProbeTerrainXYZ(10, 20, 30)</code
                 </div>
             </section>
 
+            <section id="Camera">
+                <h2>Camera</h2>
+            
+                <div class="command-section" id="StartCameraControl">
+                    <h3>bliz.StartCameraControl(func)</h3>
+                    <p>Start the camera control</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>func</td>
+                            <td>function</td>
+                            <td>The function</td>
+                        </tr>
+                    </table>
+                    <pre><code>local id = bliz.StartCameraControl(function() end)</code></pre>
+                </div>
+
+                <div class="command-section" id="StopCameraControl">
+                    <h3>bliz.StopCameraControl(id)</h3>
+                    <p>Stop the camera control</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The ID of the camera</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.StopCameraControl(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="IsCameraBeingControlled">
+                    <h3>bliz.IsCameraBeingControlled()</h3>
+                    <p>Check if the camera is being controlled</p>
+                    <pre><code>local isControlled, duration = bliz.IsCameraBeingControlled()</code></pre>
+                </div>
+
+                <div class="command-section" id="ReadCameraPosition">
+                    <h3>bliz.ReadCameraPosition(func)</h3>
+                    <p>Read the camera position</p>
+                    <pre><code>local x, y, z, pitch, heading, roll, zoom = bliz.ReadCameraPosition()</code></pre>
+                </div>
+            </section>
+
             <section id="Timers">
                 <h2>Timers</h2>
             
