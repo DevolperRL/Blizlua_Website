@@ -604,6 +604,91 @@ bliz.Log("ERROR", "Hello World")
             </section> 
         </section>
 
+        <section id="Dataref">
+                <h2>Dataref</h2>
+                <div class="command-section" id="Find_Dataref">
+                    <h3>bliz.Find_Dataref(name)</h3>
+                    <p>Get a dataref you want</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>Dataref name</td>
+                        </tr>
+                    </table>
+                    <pre><code>local dataref = bliz.Find_Dataref("sim/cockpit/autopilot/heading_mag")</code></pre>
+                </div>
+
+                <div class="command-section" id="GetDtf">
+                    <h3>bliz.DrawXpText(dataref)</h3>
+                    <p>Get the value of the dataref</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>dataref</td>
+                            <td>any</td>
+                            <td>Put the dataref you got from <a href = "#Find_Dataref">Find_Dataref</a></href></td>
+                        </tr>
+                    </table>
+                    <pre><code>local get_dtr = bliz.Get_Dtf(dataref)</code></pre>
+                </div>
+
+                <div class="command-section" id="SetDtf">
+                    <h3>bliz.SetDtf(dataref, value)</h3>
+                    <p>Set a dataref to a value you want</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>dataref</td>
+                            <td>dataref</td>
+                            <td>Put the dataref you got from <a href = "#Find_Dataref">Find_Dataref</href></td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.SetDtf(dtf, 10)</code></pre>
+                </div>
+
+                <div class="command-section" id="CreateDataref">
+                    <h3>bliz.CreateDataref(name, type, writeable)</h3>
+                    <p>Set a dataref to a value you want</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>string</td>
+                            <td>Put here the name of the dataref</href></td>
+                        </tr>
+                        <tr>
+                            <td>type</td>
+                            <td>integer</td>
+                            <td>Put here the type of the dataref</href></td>
+                        </tr>
+                        <tr>
+                            <td>writeable</td>
+                            <td>boolean</td>
+                            <td>Put true if you want that it's writeable</href></td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.CreateDataref("DC-8/CIVA/n_wpt", XPLM_STRING, true)</code></pre>
+                </div>
+            </section> 
+        </section>
 
         <section id="Command">
             <h2>Command</h2>
