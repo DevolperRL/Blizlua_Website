@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --code-bg: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .changelog-entry {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 0.5rem;
+        }
+
+        .changelog-entry h2 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .changelog-entry ul {
+            padding-left: 1.5rem;
+        }
+
+        .changelog-entry li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Changelog</h1>
+
+        <div class="changelog-entry">
+            <h2>Version 0.1 (Beta) - April 02, 2025</h2>
+            <ul>
+                <li>Fixed bug</li>
+            </ul>
+        </div>
+
+        <a href="#" class="back-to-top">⬆ Back to top</a>
+    </div>
+
+</body>
+</html>
