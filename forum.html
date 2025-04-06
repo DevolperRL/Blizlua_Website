@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Forum</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --code-bg: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .tutorial-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tutorial-list li {
+            background: white;
+            margin: 0.5rem 0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tutorial-list li:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(5px);
+        }
+
+        .tutorial-content {
+            display: none;
+            background: rgba(99, 102, 241, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.8rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            line-height: 1.5;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .folder-structure pre {
+            margin: 0;
+            background: #2d2d2d;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        .folder-structure {
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📖 Tutorial Forum</h1>
+
+        <ul class="tutorial-list">
+            <li onclick="showTutorial('tutorial1')">Your first project</li>
+            <li onclick="showTutorial('tutorial2')">Create a window</li>
+            <li onclick="showTutorial('tutorial3')">Draw inside window</li>
+        </ul>
+
+        <div id="tutorial1" class="tutorial-content">
+            <h2>Getting Started with Your First BlizLua Plugin</h2>
+        
+            <h3>📋 Step 1: Download the Plugin</h3>
+            <p>Download the plugin from the official BlizLua website: 
+                <a href="https://devolperrl.github.io/Blizlua_Website/">Click here</a>
+            </p>
+            <p>After downloading, place the plugin in the appropriate folder. Here are two examples:</p>
+            <pre>General Plugin: X-Plane 12/Resources/plugins/</pre>
+            <pre>Aircraft-Specific Plugin: X-Plane 12/Aircraft/MyPlanes/Dc8/plugins/</pre>
+        
+            <h3>📁 Step 2: Understand the Folder Structure</h3>
+            <p>Your plugin folder should look like this:</p>
+            <div class="folder-structure">
+                📦 MyFirstPlugin/
+                ├── 📂 64/
+                ├── 📂 data/
+                │   ├── 📂 api/
+                │   ├── 📂 library/
+                │   │   └── 📄 yourLibrary.dll  → Place all your .dll / .so / ... files here
+                │   ├── 📂 scripts/
+                │   │   ├── 📂 module/
+                │   │   │   └── 📄 yourscript.lua  → Your module scripts go here
+                │   │   └── 📄 main.lua  → Your main script
+                │   └── 📄 config.cfg  → Plugin configuration file
+                └── 📂 license/
+            </div>
+            <p><strong>Note:</strong> If you place scripts in the wrong folder, the plugin might not detect them or they may not run correctly.</p>
+        
+            <h3>⚙️ Step 3: Configure <code>config.cfg</code></h3>
+            <p>Open the <code>config.cfg</code> file using any text editor (e.g., Notepad++).</p>
+            <p>Right now, the only required setting is the project name. Feel free to change it to whatever you like. Just remember to save the file afterward!</p>
+            <pre>PROJECT_NAME=Test1</pre>
+        
+            <h3>💻 Step 4: Edit <code>main.lua</code></h3>
+            <p>Time to test if everything works! Let’s start by adding a simple log message.</p>
+            <p>Note: BlizLua uses <code>Log()</code> instead of <code>print()</code>.</p>
+            <pre>
+function onFrame() -- Called every frame. See the manual: <a href="https://devolperrl.github.io/Blizlua_Website/doc">Documentation</a>
+    Log("Hello World")
+end</pre>
+        
+            <h3>🎮 Step 5: Test in X-Plane</h3>
+            <p>Now that everything is set up, launch X-Plane and start a flight.</p>
+            <p>If everything went well, your plugin should print "Hello World" in the plugin log. Congrats — you’ve just created your first BlizLua plugin!</p>
+        
+            <a class="back-btn" onclick="hideTutorial()">⬅ Back</a>
+        </div>
+
+
+
+
+        <div id="tutorial2" class="tutorial-content">
+            <h2>🪟 Creating Your First Custom Window</h2>
+            
+            <h3>📋 Step 1: Add code to <code>main.lua</code></h3>
+            <p>Navigate to your <strong>main.lua</strong> file located inside <code>BlizLua > data > scripts</code>. To create a basic window, add the following code:</p>
+            
+            <pre>
+local win = bliz.CreateXPWindow({
+    title = "Hello",            -- The title displayed on the window
+    position = {300, 300, 500, 500}, -- {x, y, width, height}
+    visible = true,             -- Determines if the window is shown
+    background = true           -- Draws a background behind the window
+})</pre>
+        
+            <p>In this example, a window titled <strong>"Hello"</strong> will appear at position <code>x: 300, y: 300</code> with a size of <strong>200x200</strong> (from 300 to 500).</p>
+            
+            <p>You can change the values of <code>position</code> to place and resize the window wherever you want.</p>
+        
+            <h3>🧪 Step 2: Run and test</h3>
+            <p>Save the file, then launch X-Plane and start your flight. If everything is set up correctly, the custom window will appear automatically.</p>
+            
+            <p>This window doesn’t do anything yet — but don't worry, we’ll add interaction in the next tutorial!</p>
+        
+            <a class="back-btn" onclick="hideTutorial()">⬅ Back</a>
+            <a class="back-btn" onclick="showTutorial('tutorial3')">Next ➡</a>
+        </div>
+
+
+        <div id="tutorial3" class="tutorial-content">
+            <h2>🪟 Drawing Inside Your Custom Window</h2>
+            
+            <p>In this part, you'll learn how to draw elements inside your custom window using BlizLua.</p>
+            <p>In BlizLua, drawing inside a window is only possible if you've created a window instance. Here's how to do it:</p>
+            
+            <pre>
+        win:Draw(function(id)
+            -- See the manual for more functions: 
+            -- https://devolperrl.github.io/Blizlua_Website/doc
+            bliz.gl.DrawRectangle(id, 0, 0, 25, 25, true, 1, {1, 1, 1, 1}) 
+            bliz.gl.DrawCircle(id, 250, 250, 50, 3, 5, false, {1, 1, 1, 1})
+        end)</pre>
+        
+            <p>In this example, we draw a white rectangle and a circle inside the window. The <code>id</code> is the window's unique drawing ID.</p>
+            <p>You can explore more drawing functions (like lines, text, etc.) in the <a href="https://devolperrl.github.io/Blizlua_Website/doc" target="_blank">BlizLua documentation</a>.</p>
+        
+            <h3>🧪 Step 2: Run and Test</h3>
+            <p>Save your <code>main.lua</code> file, then open X-Plane and start your flight. If the window appears and you see the drawn shapes, everything is working perfectly!</p>
+        
+            <a class="back-btn" onclick="hideTutorial()">⬅ Back</a>
+            <a class="back-btn" onclick="showTutorial('tutorial4')">Next ➡</a>
+        </div>
+    </div>
+
+    <script>
+        function showTutorial(id) {
+            document.querySelectorAll(".tutorial-content").forEach(tutorial => {
+                tutorial.style.display = "none";
+            });
+            document.querySelector(".tutorial-list").style.display = "none";
+            document.getElementById(id).style.display = "block";
+        }
+
+        function hideTutorial() {
+            document.querySelector(".tutorial-list").style.display = "block";
+
+            document.querySelectorAll(".tutorial-content").forEach(tutorial => {
+                tutorial.style.display = "none";
+            });
+        }
+    </script>
+
+</body>
+</html>
