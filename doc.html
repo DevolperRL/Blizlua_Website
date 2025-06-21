@@ -214,11 +214,12 @@
                 <a href="#Const" class="active">Const</a>
                 <a href="#Functions">Functions</a>
                 <a href="#Debug">Debug</a>
-                <a href="#Xplane-Def">Xplane-Def</a>
                 <a href="#Dataref">Dataref</a>
                 <a href="#Command">Command</a>
+                <a href="#Xplane-Def">Xplane-Def</a>
                 <a href="#Files">Files</a>
                 <a href="#OpenGL">OpenGL</a>
+                <a href="#OpenAL">OpenAL</a>
                 <a href="#Navigation">Navigation</a>
                 <a href="#NET">NET</a>
                 <a href="#Weather">Weather</a>
@@ -405,13 +406,6 @@
 
             <section id="Functions">
                 <h2>Functions</h2>
-                
-                <div class="command-section" id="Update">
-                    <h3>update()</h3>
-                    <p>Get called every frame</p>
-                    <pre><code>function update() end</code></pre>
-                </div>
-
                 <div class="command-section" id="PlaneLoaded">
                     <h3>PlaneLoaded()</h3>
                     <p>Get called when the plane is loaded</p>
@@ -582,6 +576,47 @@ bliz.Log("ERROR", "Hello World")
                         <pre><code>win:OnCursor(function(x, y) end)</code></pre>
                     </div>
 
+                    <div class="command-section" id="RegisterUpdateCallback">
+                        <h3>bliz.RegisterUpdateCallback(func, num)</h3>
+                        <p>Create a register call back</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>func</td>
+                                <td>function</td>
+                                <td>The function you want that get called</td>
+                            </tr>
+                            <tr>
+                                <td>num</td>
+                                <td>int</td>
+                                <td>It's the interval for the function</td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.RegisterUpdateCallback(function() end, -1)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="UnregisterUpdateCallback">
+                        <h3>bliz.RegisterUpdateCallback(func)</h3>
+                        <p>Delete a registered call back</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>func</td>
+                                <td>function</td>
+                                <td>Put here the name of the function that you registered</td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.UnregisterUpdateCallback(update)</code></pre>
+                    </div>
+
                     <div class="command-section" id="SpeakString">
                         <h3>bliz.SpeakString(text)</h3>
                         <p>Speak a string you want (using xplane default voice)</p>
@@ -600,11 +635,247 @@ bliz.Log("ERROR", "Hello World")
                         <pre><code>bliz.SpeakString("Hello")</code></pre>
                     </div>
 
-                   
-            </section> 
-        </section>
+                    <div class="command-section" id="DrawXpText">
+                        <h3>bliz.DrawXpText(id, text, x, y, color)</h3>
+                        <p>Draw Xplane Default Text</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>number</td>
+                                <td>You get this from the function Draw</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>string</td>
+                                <td>The text you want</td>
+                            </tr>
+                            <tr>
+                                <td>x</td>
+                                <td>number</td>
+                                <td>The X position you want</td>
+                            </tr>
+                            <tr>
+                                <td>y</td>
+                                <td>number</td>
+                                <td>The Y position you want</td>
+                            </tr>
+                            <tr>
+                                <td>color</td>
+                                <td>table</td>
+                                <td>A table of RBGA: {n,n,n,n}</td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.DrawXpText(id, "Hello World", 100, 100, {1,1,1,1})</code></pre>
+                    </div>
 
-        <section id="Dataref">
+                    <div class="command-section" id="Find_Dataref">
+                        <h3>bliz.Find_Dataref(name)</h3>
+                        <p>Get a dataref you want</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>name</td>
+                                <td>string</td>
+                                <td>Dataref name</td>
+                            </tr>
+                        </table>
+                        <pre><code>local dataref = bliz.Find_Dataref("sim/cockpit/autopilot/heading_mag")</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="GetDtf">
+                        <h3>bliz.DrawXpText(dataref)</h3>
+                        <p>Get the value of the dataref</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>dataref</td>
+                                <td>any</td>
+                                <td>Put the dataref you got from <a href = "#Find_Dataref">Find_Dataref</a></href></td>
+                            </tr>
+                        </table>
+                        <pre><code>local get_dtr = bliz.Get_Dtf(dataref)</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="SetDtf">
+                        <h3>bliz.SetDtf(dataref, value)</h3>
+                        <p>Set a dataref to a value you want</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>dataref</td>
+                                <td>dataref</td>
+                                <td>Put the dataref you got from <a href = "#Find_Dataref">Find_Dataref</href></td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.SetDtf(dtf, 10)</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="CreateDataref">
+                        <h3>bliz.CreateDataref(name, type, writeable)</h3>
+                        <p>Set a dataref to a value you want</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>name</td>
+                                <td>string</td>
+                                <td>Put here the name of the dataref</href></td>
+                            </tr>
+                            <tr>
+                                <td>type</td>
+                                <td>integer</td>
+                                <td>Put here the type of the dataref</href></td>
+                            </tr>
+                            <tr>
+                                <td>writeable</td>
+                                <td>boolean</td>
+                                <td>Put true if you want that it's writeable</href></td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.CreateDataref("DC-8/CIVA/n_wpt", XPLM_STRING, true)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="FindCommand">
+                        <h3>bliz.FindCommand(name)</h3>
+                        <p>Get a command you want</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>name</td>
+                                <td>string</td>
+                                <td>Dataref name</td>
+                            </tr>
+                        </table>
+                        <pre><code>local command = bliz.FindCommand("sim/flight_controls/door_close_1")</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="CreateCommand">
+                        <h3>bliz.CreateCommand(command, description)</h3>
+                        <p>Create a command</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>command</td>
+                                <td>any</td>
+                                <td>Put the dataref you got from <a href = "#FindCommand">FindCommand</a></href></td>
+                            </tr>
+                        </table>
+                        <pre><code>local command = bliz.CreateCommand("Dc-8/CIVA/Button_A", "The button A on the CIVA")</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="RegisterCommand">
+                        <h3>bliz.RegisterCommand(command, before, func)</h3>
+                        <p>Register command to a function callback</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>command</td>
+                                <td>command</td>
+                                <td>Put the dataref you got from <a href = "#FindCommand">FindCommand</href></td>
+                            </tr>
+                            <tr>
+                                <td>before</td>
+                                <td>integer</td>
+                                <td>Should the function get called before or after? (0 = Before; 1 = After)</href></td>
+                            </tr>
+                            <tr>
+                                <td>func</td>
+                                <td>function</td>
+                                <td>Put here a function</href></td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.RegisterCommand(ownCommand, 0, function(cmd, phase, elapsed) end)</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="CommandStart">
+                        <h3>bliz.CommandStart(command)</h3>
+                        <p>Run a command</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>command</td>
+                                <td>command</td>
+                                <td>Put the dataref you got from <a href = "#FindCommand">FindCommand</href></td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.CommandStart(command)</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="CommandStop">
+                        <h3>bliz.CommandStop(command)</h3>
+                        <p>Stop a command</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>command</td>
+                                <td>command</td>
+                                <td>Put the dataref you got from <a href = "#FindCommand">FindCommand</href></td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.CommandStop(command)</code></pre>
+                    </div>
+    
+                    <div class="command-section" id="CommandOnce">
+                        <h3>bliz.CommandOnce(command)</h3>
+                        <p>Run a command Once</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>command</td>
+                                <td>command</td>
+                                <td>Put the dataref you got from <a href = "#FindCommand">FindCommand</href></td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.CommandOnce(command)</code></pre>
+                    </div>
+                </section> 
+            </section>
+
+            <section id="Dataref">
                 <h2>Dataref</h2>
                 <div class="command-section" id="Find_Dataref">
                     <h3>bliz.Find_Dataref(name)</h3>
@@ -689,6 +960,7 @@ bliz.Log("ERROR", "Hello World")
                 </div>
             </section> 
         </section>
+
 
         <section id="Command">
             <h2>Command</h2>
@@ -1038,44 +1310,63 @@ bliz.Log("ERROR", "Hello World")
 
             <section id="OpenGL">
                 <h2>OpenGL</h2>
- <div class="command-section" id="DrawXpText">
-                        <h3>bliz.DrawXpText(id, text, x, y, color)</h3>
-                        <p>Draw Xplane Default Text</p>
-                        <table class="param-table">
-                            <tr>
-                                <th>Property</th>
-                                <th>Type</th>
-                                <th>Description</th>
-                            </tr>
-                            <tr>
-                                <td>id</td>
-                                <td>number</td>
-                                <td>You get this from the function Draw</td>
-                            </tr>
-                            <tr>
-                                <td>text</td>
-                                <td>string</td>
-                                <td>The text you want</td>
-                            </tr>
-                            <tr>
-                                <td>x</td>
-                                <td>number</td>
-                                <td>The X position you want</td>
-                            </tr>
-                            <tr>
-                                <td>y</td>
-                                <td>number</td>
-                                <td>The Y position you want</td>
-                            </tr>
-                            <tr>
-                                <td>color</td>
-                                <td>table</td>
-                                <td>A table of RBGA: {n,n,n,n}</td>
-                            </tr>
-                        </table>
-                        <pre><code>bliz.DrawXpText(id, "Hello World", 100, 100, {1,1,1,1})</code></pre>
-                    </div>
-                
+                <div class="command-section" id="BeginClip">
+                    <h3>bliz.gl.BeginClip(id, x, y, width, height)</h3>
+                    <p>Draw custom text</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>The X position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>The Y position you want</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td>The width</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>number</td>
+                            <td>The Height</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.BeginClip(id, 100, 100, 50, 50)</code></pre>
+                </div>
+
+                <div class="command-section" id="EndClip">
+                    <h3>bliz.gl.EndClip(id)</h3>
+                    <p>Draw custom text</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.EndClip(id)</code></pre>
+                </div>
+
+
                 <div class="command-section" id="DrawCustomText">
                     <h3>bliz.gl.DrawCustomText(id, text, x, y, size, align, color, id_font)</h3>
                     <p>Draw custom text</p>
@@ -1280,6 +1571,315 @@ bliz.Log("ERROR", "Hello World")
                     <pre><code>bliz.gl.DrawLine(id, 10, 50, 50, 100, 10, {1,1,1,1})</code></pre>
                 </div>
 
+                <div class="command-section" id="DrawWideLine">
+                    <h3>bliz.gl.DrawWideLine(id, x1, y1, x2, y2, lineWidth, segments, color)</h3>
+                    <p>Draw a wide line</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x1</td>
+                            <td>number</td>
+                            <td>The X1 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y1</td>
+                            <td>number</td>
+                            <td>The Y1 position you want</td>
+                        </tr>
+
+                        <tr>
+                            <td>x2</td>
+                            <td>number</td>
+                            <td>The X2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y2</td>
+                            <td>number</td>
+                            <td>The Y2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidth</td>
+                            <td>number</td>
+                            <td>The width of line you want</td>
+                        </tr>
+                        <tr>
+                            <td>segments</td>
+                            <td>number</td>
+                            <td>The segments you want</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>table</td>
+                            <td>A table of RBGA: {n,n,n,n}</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawWideLine(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawLinePattern">
+                    <h3>bliz.gl.DrawLinePattern(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <p>Draw a line Pattern</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x1</td>
+                            <td>number</td>
+                            <td>The X1 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y1</td>
+                            <td>number</td>
+                            <td>The Y1 position you want</td>
+                        </tr>
+
+                        <tr>
+                            <td>x2</td>
+                            <td>number</td>
+                            <td>The X2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y2</td>
+                            <td>number</td>
+                            <td>The Y2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidth</td>
+                            <td>number</td>
+                            <td>The width of line you want</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>table</td>
+                            <td>A table of RBGA: {n,n,n,n}</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawLinePattern(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawBezierLineQ">
+                    <h3>bliz.gl.DrawBezierLineQ(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <p>Draw a Bezier Q line</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x1</td>
+                            <td>number</td>
+                            <td>The X1 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y1</td>
+                            <td>number</td>
+                            <td>The Y1 position you want</td>
+                        </tr>
+
+                        <tr>
+                            <td>x2</td>
+                            <td>number</td>
+                            <td>The X2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y2</td>
+                            <td>number</td>
+                            <td>The Y2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidth</td>
+                            <td>number</td>
+                            <td>The width of line you want</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>table</td>
+                            <td>A table of RBGA: {n,n,n,n}</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawBezierLineQ(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawBezierLineC">
+                    <h3>bliz.gl.DrawBezierLineC(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <p>Draw a Bezier C line</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x1</td>
+                            <td>number</td>
+                            <td>The X1 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y1</td>
+                            <td>number</td>
+                            <td>The Y1 position you want</td>
+                        </tr>
+
+                        <tr>
+                            <td>x2</td>
+                            <td>number</td>
+                            <td>The X2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y2</td>
+                            <td>number</td>
+                            <td>The Y2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidth</td>
+                            <td>number</td>
+                            <td>The width of line you want</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>table</td>
+                            <td>A table of RBGA: {n,n,n,n}</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawBezierLineC(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawArc">
+                    <h3>bliz.gl.DrawArc(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <p>Draw a line Pattern</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x1</td>
+                            <td>number</td>
+                            <td>The X1 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y1</td>
+                            <td>number</td>
+                            <td>The Y1 position you want</td>
+                        </tr>
+
+                        <tr>
+                            <td>x2</td>
+                            <td>number</td>
+                            <td>The X2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y2</td>
+                            <td>number</td>
+                            <td>The Y2 position you want</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidth</td>
+                            <td>number</td>
+                            <td>The width of line you want</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>table</td>
+                            <td>A table of RBGA: {n,n,n,n}</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawArc(id, x1, y1, x2, y2, lineWidth, color)</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawEllipse">
+                    <h3>bliz.gl.DrawEllipse(id, x, y, rx, ry, segments, filled, lineWidth, color)</h3>
+                    <p>Draw a line Pattern</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>The X position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>The Y position you want</td>
+                        </tr>
+
+                        <tr>
+                            <td>rx</td>
+                            <td>number</td>
+                            <td>The radius X position you want</td>
+                        </tr>
+                        <tr>
+                            <td>ry</td>
+                            <td>number</td>
+                            <td>The radius Y position you want</td>
+                        </tr>
+                        <tr>
+                            <td>segments</td>
+                            <td>number</td>
+                            <td>The segments of line you want</td>
+                        </tr>
+                        <tr>
+                            <td>filled</td>
+                            <td>boolean</td>
+                            <td>Filled?</td>
+                        </tr>
+                        <tr>
+                            <td>lineWidth</td>
+                            <td>number</td>
+                            <td>The width of line you want</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>table</td>
+                            <td>A table of RBGA: {n,n,n,n}</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawEllipse(id, x, y, rx, ry, segments, filled, lineWidth, color)</code></pre>
+                </div>
+
                 <div class="command-section" id="DrawFilledCircle">
                     <h3>bliz.gl.DrawFilledCircle(id, x, y, radius, segments, color)</h3>
                     <p>Draw a a filled circle</p>
@@ -1409,6 +2009,68 @@ bliz.Log("ERROR", "Hello World")
                     <pre><code>bliz.gl.DrawTexture(id, 50, 150, 100, 100, textureID)</code></pre>
                 </div>
 
+                <div class="command-section" id="DrawRotatedTexture">
+                    <h3>bliz.gl.DrawRotatedTexture(id, x, y, width, height, deg, anchorX, anchorY, texID)</h3>
+                    <p>Draw a texture</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>You get this from the function Draw</td>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>The X position you want</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>The Y position you want</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td>The width of the texture</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>number</td>
+                            <td>The high of the texture</td>
+                        </tr>
+
+                        <tr>
+                            <td>deg</td>
+                            <td>number</td>
+                            <td>How many deg should rotate the image</td>
+                        </tr>
+
+                        <tr>
+                            <td>anchorX</td>
+                            <td>number</td>
+                            <td>Anchor the point where it should rotate in X</td>
+                        </tr>
+
+                        <tr>
+                            <td>anchorY</td>
+                            <td>number</td>
+                            <td>Anchor the point where it should rotate in Y</td>
+                        </tr>
+
+                        <tr>
+                            <td>texID</td>
+                            <td>table</td>
+                            <td>You get the id from <a href="#LoadTexture">LoadTexture</a></td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawRotatedTexture(id, 50, 150, 100, 100, 90, 50, 50, textureID)</code></pre>
+                </div>
+
                 <div class="command-section" id="LoadTexture">
                     <h3>bliz.gl.LoadTexture(path)</h3>
                     <p>Load a texture</p>
@@ -1425,6 +2087,48 @@ bliz.Log("ERROR", "Hello World")
                         </tr>
                     </table>
                     <pre><code>local textureID = bliz.gl.LoadTexture(GetPluginPath() .. "data/resources/images/test.png")</code></pre>
+                </div>
+
+                <div class="command-section" id="LoadTextureRegion">
+                    <h3>bliz.gl.LoadTextureRegion(path, x, y, regionW, regionH)</h3>
+                    <p>Load a texture</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>path</td>
+                            <td>string</td>
+                            <td>The path to the string</td>
+                        </tr>
+
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>The x position of the region</td>
+                        </tr>
+
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>The y position of the region</td>
+                        </tr>
+
+                        <tr>
+                            <td>regionW</td>
+                            <td>number</td>
+                            <td>The width of the region</td>
+                        </tr>
+
+                        <tr>
+                            <td>regionH</td>
+                            <td>number</td>
+                            <td>The height of the region</td>
+                        </tr>
+                    </table>
+                    <pre><code>local textureID = bliz.gl.LoadTextureRegion(GetPluginPath() .. "data/resources/images/test.png", 50, 50, 100, 100)</code></pre>
                 </div>
 
                 <div class="command-section" id="LoadFont">
@@ -1446,8 +2150,161 @@ bliz.Log("ERROR", "Hello World")
                 </div>
             </section>
 
+            <section id="OpenAL">
+                <h2>OpenAL</h2>
+                <div class="command-section" id="LoadSound">
+                    <h3>bliz.gl.LoadSound(path)</h3>
+                    <p>Load the .wav</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>path</td>
+                            <td>string</td>
+                            <td>The path to the audio</td>
+                        </tr>
+                    </table>
+                    <pre><code>local id = bliz.gl.LoadSound(GetPluginPath().."data/scripts/modules/audio.wav")</code></pre>
+                </div>
+
+                <div class="command-section" id="Playsound">
+                    <h3>bliz.gl.Playsound(id)</h3>
+                    <p>Play the .wav</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The id where you get from LoadSound</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.gl.Playsound(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="StopSound">
+                    <h3>bliz.gl.StopSound(id)</h3>
+                    <p>Stop the .wav</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The id where you get from LoadSound</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.gl.StopSound(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="PauseSound">
+                    <h3>bliz.gl.PauseSound(id)</h3>
+                    <p>Pause the .wav</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The id where you get from LoadSound</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.gl.PauseSound(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="ResumeSound">
+                    <h3>bliz.gl.ResumeSound(id)</h3>
+                    <p>Resume the .wav</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The id where you get from LoadSound</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.gl.ResumeSound(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="GetSoundDuration">
+                    <h3>bliz.gl.GetSoundDuration(id)</h3>
+                    <p>Get how long the audio is in seconds</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The id where you get from LoadSound</td>
+                        </tr>
+                    </table>
+                    <pre><code>local dur = bliz.gl.ResumeSound(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="GetPlaybackOffset">
+                    <h3>bliz.gl.GetPlaybackOffset(id)</h3>
+                    <p>Returns the current playback position of the audio in seconds</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The id where you get from LoadSound</td>
+                        </tr>
+                    </table>
+                    <pre><code>local dur = bliz.gl.GetPlaybackOffset(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="SetPlaybackOffset">
+                    <h3>bliz.gl.SetPlaybackOffset(id, offset)</h3>
+                    <p>Sets the current playback position of the audio to the given time in seconds</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>number</td>
+                            <td>The id where you get from LoadSound</td>
+                        </tr>
+
+                        <tr>
+                            <td>offset</td>
+                            <td>number</td>
+                            <td>The position to jump</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.gl.SetPlaybackOffset(id, 3)</code></pre>
+                </div>
+            </section>
+
             <section id="Navigation">
-                <h2>Navigation</h2>
+                <h2>Command</h2>
                 <div class="command-section" id="GetFirstNavAid">
                     <h3>bliz.GetFirstNavAid()</h3>
                     <p>Get the first navaid</p>
@@ -1658,18 +2515,44 @@ bliz.Log("ERROR", "Hello World")
                         <td>Optional body content for POST/PUT requests.</td>
                     </tr>
                 </table>
+                <pre><code> 
+local url = "https://api.weather.com/metar/EDDM"
+local method = "GET"
+local headers = { ["Accept"] = "application/json" }
+local response, err = bliz.net.SendHTTPRequest(url, method, headers, nil)
+
+if response then
+    Log("Response: " .. response)
+else
+    Log("Error: " .. err)
+end</code></pre>
+            </div>
+
+            <div class="command-section" id="DownloadFileFromURL">
+                <h3>bliz.net.DownloadFileFromURL(url, path)</h3>
+                <p>Download any file from URL</p>
+                <table class="param-table">
+                    <tr>
+                        <th>Property</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>url</td>
+                        <td>string</td>
+                        <td>The URL of the request.</td>
+                    </tr>
+                    <tr>
+                        <td>path</td>
+                        <td>string</td>
+                        <td>The path where to put</td>
+                    </tr>
+                </table>
                 <pre><code>
-        local url = "https://api.weather.com/metar/EDDM"
-        local method = "GET"
-        local headers = { ["Accept"] = "application/json" }
-        local response, err = bliz.net.SendHTTPRequest(url, method, headers, nil)
-        
-        if response then
-            print("Response: " .. response)
-        else
-            print("Error: " .. err)
-        end
-                </code></pre>
+local success, err = DownloadFileFromURL(
+    "https://github.com/DevolperRL/BlizLua/archive/refs/heads/main.zip",
+    bliz.file.GetPluginPath() .. "data/scripts/modules/main.zip"
+)</code></pre>
             </div>
         </section>
     </section>
@@ -2232,6 +3115,99 @@ is_wet, velocityX, velocityY, velocityZ = bliz.ProbeTerrainXYZ(10, 20, 30)</code
 
             <section id="Utils">
                 <h2>Utils</h2>
+
+                <div class="command-section" id="SetClipboardText">
+                    <h3>bliz.SetClipboardText(clip)</h3>
+                    <p>Add text to the clipboard</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>clip</td>
+                            <td>string</td>
+                            <td>The text that should be added  to the clipboard</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.SetClipboardText("Hello!")</code></pre>
+                </div>
+
+                <div class="command-section" id="CreateNotification">
+                    <h3>bliz.CreateNotification(title, message, lifetime)</h3>
+                    <p>Create a warning message</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>string</td>
+                            <td>The title text</td>
+                        </tr>
+                        <tr>
+                            <td>message</td>
+                            <td>string</td>
+                            <td>The message text</td>
+                        </tr>
+                        <tr>
+                            <td>lifetime</td>
+                            <td>int</td>
+                            <td>How long should show the notification before disapear (in seconds)</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.CreateNotification("Warnng", "You can see me", 3)</code></pre>
+                </div>
+
+                <div class="command-section" id="CreateYesNoWarning">
+                    <h3>bliz.CreateYesNoWarning(text, funcYes, funcNo)</h3>
+                    <p>Create a warning message</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>text</td>
+                            <td>string</td>
+                            <td>The message text</td>
+                        </tr>
+                        <tr>
+                            <td>funcYes</td>
+                            <td>function</td>
+                            <td>This will  get called when the user click on yes button</td>
+                        </tr>
+                        <tr>
+                            <td>funcNo</td>
+                            <td>function</td>
+                            <td>This will  get called when the user click on no button</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.CreateYesNoWarning("Test message", funcYes, funcNo)</code></pre>
+                </div>
+
+                <div class="command-section" id="CreateWarning">
+                    <h3>bliz.CreateWarning(text)</h3>
+                    <p>Create a warning message</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>text</td>
+                            <td>string</td>
+                            <td>The text inside the warning</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.CreateWarning("Couldn't load load, contact dev")</code></pre>
+                </div>
+
                 <div class="command-section" id="ReloadProject">
                     <h3>bliz.ReloadProject()</h3>
                     <p>Reload project</p>
@@ -2502,6 +3478,35 @@ is_wet, velocityX, velocityY, velocityZ = bliz.ProbeTerrainXYZ(10, 20, 30)</code
 function Draw(id)
     bliz.DrawXpText(id, "ALT: "..math.floor(altitude.value), 50, 50, {1,1,1,1})
 end</code></pre>
+                </div>
+
+
+                <div class="command-section" id="CreateNotification">
+                    <h3>bliz.CreateNotification(title, description, time)</h3>
+                    <p>Create a notification</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>title</td>
+                            <td>string</td>
+                            <td>The title of the notification</td>
+                        </tr>
+                        <tr>
+                            <td>description</td>
+                            <td>string</td>
+                            <td>The description of the notification</td>
+                        </tr>
+                        <tr>
+                            <td>time</td>
+                            <td>number</td>
+                            <td>The time it should stay befroe it disapear</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.CreateNotification("Warning", "Reload the plane!", 5)</code></pre>
                 </div>
             </section>
 
