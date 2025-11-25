@@ -228,6 +228,7 @@
                 <a href="#Scenery">Scenery</a>
                 <a href="#Camera">Camera</a>
                 <a href="#Timers">Timers</a>
+                <a href="#Math">Math</a>
                 <a href="#Utils">Utils</a>
                 <a href="#troubleshooting">Troubleshooting</a>
             </nav>
@@ -2154,6 +2155,247 @@ bliz.Log("ERROR", "Hello World")
                     </table>
                     <pre><code>local font = bliz.gl.LoadFont(bliz.font["ARIAL"])</code></pre>
                 </div>
+
+                <div class="command-section" id="EnableFog">
+                    <h3>bliz.gl.EnableFog(start, ending, color)</h3>
+                    <p>Enable OpenGL fog with specified start, end distances, and optional RGBA color.</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>start</td>
+                            <td>integer</td>
+                            <td>Fog start distance</td>
+                        </tr>
+                        <tr>
+                            <td>ending</td>
+                            <td>integer</td>
+                            <td>Fog end distance</td>
+                        </tr>
+                        <tr>
+                            <td>color</td>
+                            <td>table</td>
+                            <td>Optional RGBA color table {r,g,b,a}</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.EnableFog(start, ending, color)</code></pre>
+                </div>
+
+                <div class="command-section" id="DisableFog">
+                    <h3>bliz.gl.DisableFog()</h3>
+                    <p>Disable OpenGL fog.</p>
+                    <pre><code>bliz.gl.DisableFog()</code></pre>
+                </div>
+
+                <div class="command-section" id="EnableDepth">
+                    <h3>bliz.gl.EnableDepth()</h3>
+                    <p>Enable depth testing for 3D rendering.</p>
+                    <pre><code>bliz.gl.EnableDepth()</code></pre>
+                </div>
+
+                <div class="command-section" id="DisableDepth">
+                    <h3>bliz.gl.DisableDepth()</h3>
+                    <p>Disable depth testing.</p>
+                    <pre><code>bliz.gl.DisableDepth()</code></pre>
+                </div>
+
+                <div class="command-section" id="ClearDepth">
+                    <h3>bliz.gl.ClearDepth(clearValue)</h3>
+                    <p>Clear the depth buffer with an optional value (0.0–1.0).</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>clearValue</td><td>number</td><td>Optional depth clear value</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.ClearDepth(clearValue)</code></pre>
+                </div>
+
+                <div class="command-section" id="SetBlendMode">
+                    <h3>bliz.gl.SetBlendMode(id, src, dst)</h3>
+                    <p>Enable blending with specified source and destination factors.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>id</td><td>integer</td><td>Window or render target ID</td></tr>
+                        <tr><td>src</td><td>integer</td><td>Source blend factor</td></tr>
+                        <tr><td>dst</td><td>integer</td><td>Destination blend factor</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.SetBlendMode(id, src, dst)</code></pre>
+                </div>
+
+                <div class="command-section" id="PushMatrix">
+                    <h3>bliz.gl.PushMatrix()</h3>
+                    <p>Push the current matrix stack.</p>
+                    <pre><code>bliz.gl.PushMatrix()</code></pre>
+                </div>
+
+                <div class="command-section" id="PopMatrix">
+                    <h3>bliz.gl.PopMatrix()</h3>
+                    <p>Pop the top matrix from the stack.</p>
+                    <pre><code>bliz.gl.PopMatrix()</code></pre>
+                </div>
+
+                <div class="command-section" id="Translate">
+                    <h3>bliz.gl.Translate(x, y, z)</h3>
+                    <p>Apply translation to the current matrix.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>x</td><td>number</td><td>Translation in X axis</td></tr>
+                        <tr><td>y</td><td>number</td><td>Translation in Y axis</td></tr>
+                        <tr><td>z</td><td>number</td><td>Translation in Z axis</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.Translate(x, y, z)</code></pre>
+                </div>
+
+                <div class="command-section" id="Rotate">
+                    <h3>bliz.gl.Rotate(angle, x, y, z)</h3>
+                    <p>Rotate around an axis by an angle in degrees.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>angle</td><td>number</td><td>Rotation angle in degrees</td></tr>
+                        <tr><td>x</td><td>number</td><td>X component of rotation axis</td></tr>
+                        <tr><td>y</td><td>number</td><td>Y component of rotation axis</td></tr>
+                        <tr><td>z</td><td>number</td><td>Z component of rotation axis</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.Rotate(angle, x, y, z)</code></pre>
+                </div>
+
+                <div class="command-section" id="Scale">
+                    <h3>bliz.gl.Scale(x, y, z)</h3>
+                    <p>Scale the current matrix.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>x</td><td>number</td><td>Scale factor X</td></tr>
+                        <tr><td>y</td><td>number</td><td>Scale factor Y</td></tr>
+                        <tr><td>z</td><td>number</td><td>Scale factor Z</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.Scale(x, y, z)</code></pre>
+                </div>
+
+                <div class="command-section" id="BeginRenderTarget">
+                    <h3>bliz.gl.BeginRenderTarget(winID, x, y, width, height, argHandle)</h3>
+                    <p>Begin rendering to a render target texture.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>winID</td><td>integer</td><td>Window ID</td></tr>
+                        <tr><td>x</td><td>integer</td><td>Render target X offset</td></tr>
+                        <tr><td>y</td><td>integer</td><td>Render target Y offset</td></tr>
+                        <tr><td>width</td><td>integer</td><td>Width of the target</td></tr>
+                        <tr><td>height</td><td>integer</td><td>Height of the target</td></tr>
+                        <tr><td>argHandle</td><td>integer</td><td>Optional handle for existing render target</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.BeginRenderTarget(winID, x, y, width, height, argHandle)</code></pre>
+                </div>
+
+                <div class="command-section" id="EndRenderTarget">
+                    <h3>bliz.gl.EndRenderTarget()</h3>
+                    <p>End rendering to a render target.</p>
+                    <pre><code>bliz.gl.EndRenderTarget()</code></pre>
+                </div>
+
+                <div class="command-section" id="GetRenderTexture">
+                    <h3>bliz.gl.GetRenderTexture(id)</h3>
+                    <p>Get the OpenGL texture ID for a render target or texture handle.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>id</td><td>integer</td><td>Render target or texture handle</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.GetRenderTexture(id)</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawVerticalGradient">
+                    <h3>bliz.gl.DrawVerticalGradient(winID, x, y, width, height, topColor, bottomColor)</h3>
+                    <p>Draw a vertical gradient in a window.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>winID</td><td>integer</td><td>Window ID</td></tr>
+                        <tr><td>x</td><td>number</td><td>X position</td></tr>
+                        <tr><td>y</td><td>number</td><td>Y position</td></tr>
+                        <tr><td>width</td><td>number</td><td>Width of gradient</td></tr>
+                        <tr><td>height</td><td>number</td><td>Height of gradient</td></tr>
+                        <tr><td>topColor</td><td>table</td><td>RGBA color at top</td></tr>
+                        <tr><td>bottomColor</td><td>table</td><td>RGBA color at bottom</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawVerticalGradient(winID, x, y, width, height, topColor, bottomColor)</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawHorizontalGradient">
+                    <h3>bliz.gl.DrawHorizontalGradient(winID, x, y, width, height, leftColor, rightColor)</h3>
+                    <p>Draw a horizontal gradient in a window.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>winID</td><td>integer</td><td>Window ID</td></tr>
+                        <tr><td>x</td><td>number</td><td>X position</td></tr>
+                        <tr><td>y</td><td>number</td><td>Y position</td></tr>
+                        <tr><td>width</td><td>number</td><td>Width of gradient</td></tr>
+                        <tr><td>height</td><td>number</td><td>Height of gradient</td></tr>
+                        <tr><td>leftColor</td><td>table</td><td>RGBA color at left</td></tr>
+                        <tr><td>rightColor</td><td>table</td><td>RGBA color at right</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawHorizontalGradient(winID, x, y, width, height, leftColor, rightColor)</code></pre>
+                </div>
+
+                <div class="command-section" id="LoadShader">
+                    <h3>bliz.gl.LoadShader(vertexSrc, fragmentSrc)</h3>
+                    <p>Load a GLSL vertex and fragment shader and return a handle.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>vertexSrc</td><td>string</td><td>Vertex shader source code</td></tr>
+                        <tr><td>fragmentSrc</td><td>string</td><td>Fragment shader source code</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.LoadShader(vertexSrc, fragmentSrc)</code></pre>
+                </div>
+
+                <div class="command-section" id="UseShader">
+                    <h3>bliz.gl.UseShader(handle)</h3>
+                    <p>Activate a previously loaded shader program.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>handle</td><td>integer</td><td>Shader handle returned by LoadShader</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.UseShader(handle)</code></pre>
+                </div>
+
+                <div class="command-section" id="SetShaderUniform">
+                    <h3>bliz.gl.SetShaderUniform(handle, name, value)</h3>
+                    <p>Set a uniform variable in a shader program.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>handle</td><td>integer</td><td>Shader handle</td></tr>
+                        <tr><td>name</td><td>string</td><td>Uniform variable name</td></tr>
+                        <tr><td>value</td><td>number|table</td><td>Value or RGBA table to set</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.SetShaderUniform(handle, name, value)</code></pre>
+                </div>
+
+                <div class="command-section" id="EnableCull">
+                    <h3>bliz.gl.EnableCull(mode)</h3>
+                    <p>Enable face culling. Optional mode: 0=back, 1=front.</p>
+                    <table class="param-table">
+                        <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                        <tr><td>mode</td><td>integer</td><td>Which face to cull (default back)</td></tr>
+                    </table>
+                    <pre><code>bliz.gl.EnableCull(mode)</code></pre>
+                </div>
+
+                <div class="command-section" id="DisableCull">
+                    <h3>bliz.gl.DisableCull()</h3>
+                    <p>Disable face culling.</p>
+                    <pre><code>bliz.gl.DisableCull()</code></pre>
+                </div>
+
+                <div class="command-section" id="EnableWireframe">
+                    <h3>bliz.gl.EnableWireframe()</h3>
+                    <p>Enable wireframe rendering.</p>
+                    <pre><code>bliz.gl.EnableWireframe()</code></pre>
+                </div>
+
+                <div class="command-section" id="DisableWireframe">
+                    <h3>bliz.gl.DisableWireframe()</h3>
+                    <p>Disable wireframe mode and restore filled polygons.</p>
+                    <pre><code>bliz.gl.DisableWireframe()</code></pre>
+                </div>
             </section>
 
             <section id="OpenAL">
@@ -3007,120 +3249,481 @@ is_wet, velocityX, velocityY, velocityZ = bliz.ProbeTerrainXYZ(10, 20, 30)</code
                 </div>
             </section>
 
-            <section id="Timers">
-                <h2>Timers</h2>
-            
-                <div class="command-section" id="createTimer">
-                    <h3>bliz.createTimer()</h3>
-                    <p>Creates a new timer.</p>
-                    <p><strong>Returns:</strong></p>
-                    <ul>
-                        <li><code>id</code> (number) - A unique timer ID.</li>
-                    </ul>
-                    <pre><code>local timerID = bliz.createTimer()</code></pre>
-                </div>
-        
-                <div class="command-section" id="startTimer">
-                    <h3>bliz.startTimer(id, time, loop, func)</h3>
-                    <p>Starts a timer with a specified interval and callback function.</p>
-                    <table class="param-table">
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>number</td><td>Timer ID returned by <code>bliz.createTimer()</code>.</td></tr>
-                        <tr><td>time</td><td>number</td><td>Interval in seconds before the timer fires.</td></tr>
-                        <tr><td>loop</td><td>boolean</td><td>Whether the timer repeats.</td></tr>
-                        <tr><td>func</td><td>function</td><td>Callback function executed when the timer fires.</td></tr>
-                    </table>
-                    <pre><code>bliz.startTimer(timerID, 1.0, true, function()
-            Log("Timer fired!")
-        end)</code></pre>
-                </div>
-        
-                <div class="command-section" id="createPerformanceTimer">
-                    <h3>bliz.createPerformanceTimer()</h3>
-                    <p>Creates a high-resolution performance timer.</p>
-                    <p><strong>Returns:</strong></p>
-                    <ul>
-                        <li><code>id</code> (number) - A unique high-resolution timer ID.</li>
-                    </ul>
-                    <pre><code>local perfTimerID = bliz.createPerformanceTimer()</code></pre>
-                </div>
-        
-                <div class="command-section" id="pauseTimer">
-                    <h3>bliz.pauseTimer(id)</h3>
-                    <p>Pauses a running timer.</p>
-                    <table class="param-table">
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>number</td><td>Timer ID.</td></tr>
-                    </table>
-                    <pre><code>bliz.pauseTimer(timerID)</code></pre>
-                </div>
-        
-                <div class="command-section" id="resumeTimer">
-                    <h3>bliz.resumeTimer(id)</h3>
-                    <p>Resumes a paused timer.</p>
-                    <table class="param-table">
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>number</td><td>Timer ID.</td></tr>
-                    </table>
-                    <pre><code>bliz.resumeTimer(timerID)</code></pre>
-                </div>
-        
-                <div class="command-section" id="stopTimer">
-                    <h3>bliz.stopTimer(id)</h3>
-                    <p>Stops a running timer.</p>
-                    <table class="param-table">
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>number</td><td>Timer ID.</td></tr>
-                    </table>
-                    <pre><code>bliz.stopTimer(timerID)</code></pre>
-                </div>
-        
-                <div class="command-section" id="deleteTimer">
-                    <h3>bliz.deleteTimer(id)</h3>
-                    <p>Deletes a timer.</p>
-                    <table class="param-table">
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>number</td><td>Timer ID.</td></tr>
-                    </table>
-                    <pre><code>bliz.deleteTimer(timerID)</code></pre>
-                </div>
-        
-                <div class="command-section" id="getElapsedMicroseconds">
-                    <h3>bliz.getElapsedMicroseconds(id)</h3>
-                    <p>Gets the elapsed time in microseconds for a timer.</p>
-                    <table class="param-table">
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>number</td><td>Timer ID.</td></tr>
-                    </table>
-                    <p><strong>Returns:</strong> <code>microseconds</code> (number) - Elapsed time in microseconds.</p>
-                    <pre><code>local micros = bliz.getElapsedMicroseconds(timerID)</code></pre>
-                </div>
-        
-                <div class="command-section" id="getElapsedSeconds">
-                    <h3>bliz.getElapsedSeconds(id)</h3>
-                    <p>Gets the elapsed time in seconds for a timer.</p>
-                    <table class="param-table">
-                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>number</td><td>Timer ID.</td></tr>
-                    </table>
-                    <p><strong>Returns:</strong> <code>seconds</code> (number) - Elapsed time in seconds.</p>
-                    <pre><code>local seconds = bliz.getElapsedSeconds(timerID)</code></pre>
-                </div>
-        
-                <div class="command-section" id="getCurrentCycle">
-                    <h3>bliz.getCurrentCycle()</h3>
-                    <p>Returns the current frame cycle count.</p>
-                    <p><strong>Returns:</strong></p>
-                    <ul>
-                        <li><code>cycle</code> (number) - The current frame cycle.</li>
-                    </ul>
-                    <pre><code>local cycle = bliz.getCurrentCycle()</code></pre>
-                </div>
-            </section>
-        </section>
+            <section id="Math">
+                    <h2>Math</h2>
+
+                        <div class="command-section" id="clamp">
+                            <h3>bliz.math.clamp(val, minVal, maxVal)</h3>
+                            <p>Clamps a value between a minimum and maximum.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>val</td><td>number</td><td>Value to clamp</td></tr>
+                                <tr><td>minVal</td><td>number</td><td>Minimum value</td></tr>
+                                <tr><td>maxVal</td><td>number</td><td>Maximum value</td></tr>
+                            </table>
+                            <pre><code>bliz.math.clamp(val, minVal, maxVal)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="lerp">
+                            <h3>bliz.math.lerp(a, b, t)</h3>
+                            <p>Linear interpolation between a and b.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>a</td><td>number</td><td>Start</td></tr>
+                                <tr><td>b</td><td>number</td><td>End</td></tr>
+                                <tr><td>t</td><td>number</td><td>Interpolation factor</td></tr>
+                            </table>
+                            <pre><code>bliz.math.lerp(a, b, t)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="inverseLerp">
+                            <h3>bliz.math.inverseLerp(a, b, v)</h3>
+                            <p>Inverse lerp: returns how far v is between a and b.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>a</td><td>number</td><td>Start</td></tr>
+                                <tr><td>b</td><td>number</td><td>End</td></tr>
+                                <tr><td>v</td><td>number</td><td>Value</td></tr>
+                            </table>
+                            <pre><code>bliz.math.inverseLerp(a, b, v)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="remap">
+                            <h3>bliz.math.remap(v, iMin, iMax, oMin, oMax)</h3>
+                            <p>Remaps a value from one range to another.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>v</td><td>number</td><td>Input value</td></tr>
+                                <tr><td>iMin</td><td>number</td><td>Input min</td></tr>
+                                <tr><td>iMax</td><td>number</td><td>Input max</td></tr>
+                                <tr><td>oMin</td><td>number</td><td>Output min</td></tr>
+                                <tr><td>oMax</td><td>number</td><td>Output max</td></tr>
+                            </table>
+                            <pre><code>bliz.math.remap(v, iMin, iMax, oMin, oMax)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="wrap">
+                            <h3>bliz.math.wrap(v, min, max)</h3>
+                            <p>Wraps a value in a circular range.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>v</td><td>number</td><td>Value</td></tr>
+                                <tr><td>min</td><td>number</td><td>Minimum</td></tr>
+                                <tr><td>max</td><td>number</td><td>Maximum</td></tr>
+                            </table>
+                            <pre><code>bliz.math.wrap(v, min, max)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="sign">
+                            <h3>bliz.math.sign(v)</h3>
+                            <p>Returns the sign (-1, 0, 1) of a value.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>v</td><td>number</td><td>Value</td></tr>
+                            </table>
+                            <pre><code>bliz.math.sign(v)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec2Length">
+                            <h3>bliz.math.vec2Length(x, y)</h3>
+                            <p>Returns the length of a 2D vector.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x</td><td>number</td><td>X</td></tr>
+                                <tr><td>y</td><td>number</td><td>Y</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec2Length(x, y)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec3Length">
+                            <h3>bliz.math.vec3Length(x, y, z)</h3>
+                            <p>Returns the length of a 3D vector.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x</td><td>number</td><td>X</td></tr>
+                                <tr><td>y</td><td>number</td><td>Y</td></tr>
+                                <tr><td>z</td><td>number</td><td>Z</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec3Length(x, y, z)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec2Normalize">
+                            <h3>bliz.math.vec2Normalize(x, y)</h3>
+                            <p>Normalizes a 2D vector.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x</td><td>number</td><td>X</td></tr>
+                                <tr><td>y</td><td>number</td><td>Y</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec2Normalize(x, y)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec3Normalize">
+                            <h3>bliz.math.vec3Normalize(x, y, z)</h3>
+                            <p>Normalizes a 3D vector.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x</td><td>number</td><td>X</td></tr>
+                                <tr><td>y</td><td>number</td><td>Y</td></tr>
+                                <tr><td>z</td><td>number</td><td>Z</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec3Normalize(x, y, z)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec2Dot">
+                            <h3>bliz.math.vec2Dot(x1, y1, x2, y2)</h3>
+                            <p>Dot product of 2D vectors.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec2Dot(x1, y1, x2, y2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec3Dot">
+                            <h3>bliz.math.vec3Dot(x1, y1, z1, x2, y2, z2)</h3>
+                            <p>Dot product of 3D vectors.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>z1</td><td>number</td><td>Z₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                                <tr><td>z2</td><td>number</td><td>Z₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec3Dot(x1, y1, z1, x2, y2, z2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec3Cross">
+                            <h3>bliz.math.vec3Cross(x1, y1, z1, x2, y2, z2)</h3>
+                            <p>Cross product of 3D vectors.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>z1</td><td>number</td><td>Z₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                                <tr><td>z2</td><td>number</td><td>Z₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec3Cross(x1, y1, z1, x2, y2, z2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec2Angle">
+                            <h3>bliz.math.vec2Angle(x1, y1, x2, y2)</h3>
+                            <p>Returns the angle between two 2D vectors.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec2Angle(x1, y1, x2, y2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec3Angle">
+                            <h3>bliz.math.vec3Angle(x1, y1, z1, x2, y2, z2)</h3>
+                            <p>Angle between two 3D vectors.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>z1</td><td>number</td><td>Z₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                                <tr><td>z2</td><td>number</td><td>Z₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec3Angle(x1, y1, z1, x2, y2, z2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vec3Project">
+                            <h3>bliz.math.vec3Project(x1, y1, z1, x2, y2, z2)</h3>
+                            <p>Projects vector (x1,y1,z1) onto (x2,y2,z2).</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>z1</td><td>number</td><td>Z₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                                <tr><td>z2</td><td>number</td><td>Z₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vec3Project(x1, y1, z1, x2, y2, z2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="distance2D">
+                            <h3>bliz.math.distance2D(x1, y1, x2, y2)</h3>
+                            <p>Distance between two points in 2D.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.distance2D(x1, y1, x2, y2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="distance3D">
+                            <h3>bliz.math.distance3D(x1, y1, z1, x2, y2, z2)</h3>
+                            <p>Distance between two points in 3D.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>z1</td><td>number</td><td>Z₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                                <tr><td>z2</td><td>number</td><td>Z₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.distance3D(x1, y1, z1, x2, y2, z2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="midpoint">
+                            <h3>bliz.math.midpoint(x1, y1, x2, y2)</h3>
+                            <p>Midpoint between two 2D points.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Y₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Y₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.midpoint(x1, y1, x2, y2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="lineIntersection2D">
+                            <h3>bliz.math.lineIntersection2D(x1, y1, x2, y2, x3, y3, x4, y4)</h3>
+                            <p>Intersection point of two 2D lines.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x1</td><td>number</td><td>Line1 X₁</td></tr>
+                                <tr><td>y1</td><td>number</td><td>Line1 Y₁</td></tr>
+                                <tr><td>x2</td><td>number</td><td>Line1 X₂</td></tr>
+                                <tr><td>y2</td><td>number</td><td>Line1 Y₂</td></tr>
+                                <tr><td>x3</td><td>number</td><td>Line2 X₁</td></tr>
+                                <tr><td>y3</td><td>number</td><td>Line2 Y₁</td></tr>
+                                <tr><td>x4</td><td>number</td><td>Line2 X₂</td></tr>
+                                <tr><td>y4</td><td>number</td><td>Line2 Y₂</td></tr>
+                            </table>
+                            <pre><code>bliz.math.lineIntersection2D(x1, y1, x2, y2, x3, y3, x4, y4)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="pointInTriangle">
+                            <h3>bliz.math.pointInTriangle(px, py, ax, ay, bx, by, cx, cy)</h3>
+                            <p>Checks if a point lies inside a triangle.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>px</td><td>number</td><td>Point X</td></tr>
+                                <tr><td>py</td><td>number</td><td>Point Y</td></tr>
+                                <tr><td>ax</td><td>number</td><td>Triangle A X</td></tr>
+                                <tr><td>ay</td><td>number</td><td>Triangle A Y</td></tr>
+                                <tr><td>bx</td><td>number</td><td>Triangle B X</td></tr>
+                                <tr><td>by</td><td>number</td><td>Triangle B Y</td></tr>
+                                <tr><td>cx</td><td>number</td><td>Triangle C X</td></tr>
+                                <tr><td>cy</td><td>number</td><td>Triangle C Y</td></tr>
+                            </table>
+                            <pre><code>bliz.math.pointInTriangle(px, py, ax, ay, bx, by, cx, cy)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="rotatePoint">
+                            <h3>bliz.math.rotatePoint(x, y, originX, originY, angleDeg)</h3>
+                            <p>Rotates a point around an origin by given degrees.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x</td><td>number</td><td>X</td></tr>
+                                <tr><td>y</td><td>number</td><td>Y</td></tr>
+                                <tr><td>originX</td><td>number</td><td>Origin X</td></tr>
+                                <tr><td>originY</td><td>number</td><td>Origin Y</td></tr>
+                                <tr><td>angleDeg</td><td>number</td><td>Angle in degrees</td></tr>
+                            </table>
+                            <pre><code>bliz.math.rotatePoint(x, y, originX, originY, angleDeg)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="headingToVector">
+                            <h3>bliz.math.headingToVector(hdg)</h3>
+                            <p>Converts a heading angle to a directional 2D vector.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>hdg</td><td>number</td><td>Heading degrees</td></tr>
+                            </table>
+                            <pre><code>bliz.math.headingToVector(hdg)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="vectorToHeading">
+                            <h3>bliz.math.vectorToHeading(x, y)</h3>
+                            <p>Converts a vector to a heading angle.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>x</td><td>number</td><td>X</td></tr>
+                                <tr><td>y</td><td>number</td><td>Y</td></tr>
+                            </table>
+                            <pre><code>bliz.math.vectorToHeading(x, y)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="normalizeHeading">
+                            <h3>bliz.math.normalizeHeading(headingDeg)</h3>
+                            <p>Normalizes a heading to 0–359 degrees.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>headingDeg</td><td>number</td><td>Heading</td></tr>
+                            </table>
+                            <pre><code>bliz.math.normalizeHeading(headingDeg)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="headingDifference">
+                            <h3>bliz.math.headingDifference(h1, h2)</h3>
+                            <p>Returns the signed heading difference.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>h1</td><td>number</td><td>Heading 1</td></tr>
+                                <tr><td>h2</td><td>number</td><td>Heading 2</td></tr>
+                            </table>
+                            <pre><code>bliz.math.headingDifference(h1, h2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="latLonBearing">
+                            <h3>bliz.math.latLonBearing(lat1, lon1, lat2, lon2)</h3>
+                            <p>Returns the initial bearing between two lat/lon points.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>lat1</td><td>number</td><td>Latitude 1</td></tr>
+                                <tr><td>lon1</td><td>number</td><td>Longitude 1</td></tr>
+                                <tr><td>lat2</td><td>number</td><td>Latitude 2</td></tr>
+                                <tr><td>lon2</td><td>number</td><td>Longitude 2</td></tr>
+                            </table>
+                            <pre><code>bliz.math.latLonBearing(lat1, lon1, lat2, lon2)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="moveLatLon">
+                            <h3>bliz.math.moveLatLon(lat, lon, bearing, distance)</h3>
+                            <p>Moves a lat/lon point by bearing and distance.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>lat</td><td>number</td><td>Latitude</td></tr>
+                                <tr><td>lon</td><td>number</td><td>Longitude</td></tr>
+                                <tr><td>bearing</td><td>number</td><td>Bearing</td></tr>
+                                <tr><td>distance</td><td>number</td><td>Distance</td></tr>
+                            </table>
+                            <pre><code>bliz.math.moveLatLon(lat, lon, bearing, distance)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="airspeedToMach">
+                            <h3>bliz.math.airspeedToMach(V, altitude)</h3>
+                            <p>Converts airspeed to Mach number.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>V</td><td>number</td><td>Airspeed</td></tr>
+                                <tr><td>altitude</td><td>number</td><td>Altitude</td></tr>
+                            </table>
+                            <pre><code>bliz.math.airspeedToMach(V, altitude)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="machToAirspeed">
+                            <h3>bliz.math.machToAirspeed(M, altitude)</h3>
+                            <p>Converts Mach number to airspeed.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>M</td><td>number</td><td>Mach</td></tr>
+                                <tr><td>altitude</td><td>number</td><td>Altitude</td></tr>
+                            </table>
+                            <pre><code>bliz.math.machToAirspeed(M, altitude)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="feetToMeters">
+                            <h3>bliz.math.feetToMeters(feet)</h3>
+                            <p>Converts feet to meters.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>feet</td><td>number</td><td>Feet value</td></tr>
+                            </table>
+                            <pre><code>bliz.math.feetToMeters(feet)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="metersToFeet">
+                            <h3>bliz.math.metersToFeet(meters)</h3>
+                            <p>Converts meters to feet.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>meters</td><td>number</td><td>Meters value</td></tr>
+                            </table>
+                            <pre><code>bliz.math.metersToFeet(meters)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="knotsToMps">
+                            <h3>bliz.math.knotsToMps(kn)</h3>
+                            <p>Converts knots to meters per second.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>kn</td><td>number</td><td>Knots</td></tr>
+                            </table>
+                            <pre><code>bliz.math.knotsToMps(kn)</code></pre>
+                        </div>
+
+                        <div class="command-section" id="mpsToKnots">
+                            <h3>bliz.math.mpsToKnots(mps)</h3>
+                            <p>Converts meters per second to knots.</p>
+                            <table class="param-table">
+                                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+                                <tr><td>mps</td><td>number</td><td>Meters per second</td></tr>
+                            </table>
+                            <pre><code>bliz.math.mpsToKnots(mps)</code></pre>
+                        </div>
+
+                </section>
 
             <section id="Utils">
                 <h2>Utils</h2>
+
+                <div class="command-section" id="CreateOwnManip">
+                    <h3>bliz.CreateOwnManip(x, y, width, height, mousePath, func)</h3>
+                    <p>Creates a custom mouse manipulation zone on the 2D panel. When the user clicks within this region, a callback is triggered.</p>
+
+                    <table class="param-table">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>X position of the manipulator on the panel (in panel coordinates).</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>Y position of the manipulator on the panel</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td>Width of the clickable region</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>number</td>
+                            <td>Height of the clickable region</td>
+                        </tr>
+                        <tr>
+                            <td>mousePath</td>
+                            <td>string</td>
+                            <td>Path to the cursor icon</td>
+                        </tr>
+                        <tr>
+                            <td>func</td>
+                            <td>function</td>
+                            <td>Callback function to call when the area is clicked or hovered</td>
+                        </tr>
+                    </table>
+
+                    <pre><code>bliz.CreateOwnManip(100, 100, 50, 50, GetPluginPath() .. "data/scripts/modules/mouse.png", function(event) end)</code></pre>
+                </div>
 
                 <div class="command-section" id="SetClipboardText">
                     <h3>bliz.SetClipboardText(clip)</h3>
