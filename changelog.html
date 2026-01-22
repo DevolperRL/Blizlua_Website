@@ -3,959 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlizLua Documentation</title>
+    <title>Changelog</title>
     <style>
-        /* Previous styles */
+        :root {
+            --primary: #6366f1;
+            --secondary: #3b82f6;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --code-bg: #1e293b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
+            background-color: var(--light);
+            color: var(--dark);
             line-height: 1.6;
         }
 
-        .docs-container {
-            max-width: 1200px;
+        .container {
+            max-width: 800px;
             margin: 2rem auto;
             padding: 2rem;
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 2rem;
-        }
-
-        .sidebar {
-            position: sticky;
-            top: 1rem;
-            height: fit-content;
-        }
-
-        .sidebar nav {
             background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
-        .sidebar a {
-            display: block;
-            padding: 0.5rem 0;
-            color: #2c3e50;
-            text-decoration: none;
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
         }
 
-        .sidebar a:hover {
-            color: #3498db;
-        }
-
-        .content {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        h1, h2, h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-
-        code {
-            background: #00000025;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        code2 {
-            background: #00000000;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-
-        pre {
-            background: #1a1a1a;
-            color: rgb(255, 255, 255);
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        /* New command linking styles */
-        .command-index {
-            background: #f8f9fa;
+        .changelog-entry {
+            margin: 1.5rem 0;
             padding: 1.5rem;
-            border-radius: 8px;
-            margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 0.5rem;
         }
 
-        .command-list {
-            columns: 2;
-            list-style-type: none;
-            padding: 0;
+        .changelog-entry h2 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
         }
 
-        .command-list a {
-            color: #2980b9;
+        .changelog-entry ul {
+            padding-left: 1.5rem;
+        }
+
+        .changelog-entry li {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
             text-decoration: none;
-            display: block;
-            padding: 0.3rem 0;
-        }
-
-        .command-list a:hover {
-            text-decoration: underline;
-        }
-
-        .command-section {
-            margin: 3rem 0;
-            padding: 1.5rem;
-            border-left: 4px solid #3498db;
-            background: #f8f9fa;
-        }
-
-        .back-to-index {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .search-box {
-            margin: 1rem 0;
-        }
-
-        #command-search {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
+            margin-top: 1.5rem;
         }
     </style>
 </head>
 <body>
-    <div class="docs-container">
-        <aside class="sidebar">
-            <nav>
-                <h3>Contents</h3>
-                <a href="#overview">Overview</a>
-                <a href="#command-index">Command Index</a>
-                <a href="#installation">Installation</a>
-                <a href="#api">API Reference</a>
-                <a href="#examples">Examples</a>
-                <a href="#faq">FAQ</a>
-                <a href="#support">Support</a>
-            </nav>
-        </aside>
 
-        <main class="content">
-            <h1>BlizLua Documentation</h1>
-            
-            <section id="overview">
-                <h2>Overview</h2>
-                <p>BlizLua is a Lua scripting environment for X-Plane that provides:</p>
-                <ul>
-                    <li>Real-time script reloading</li>
-                    <li>Access to X-Plane Datarefs and Commands</li>
-                    <li>Custom drawing capabilities</li>
-                    <li>File I/O operations</li>
-                    <li>Network communication</li>
-                </ul>
-
-                <div class="command-index" id="command-index">
-                    <h3>Command Quick Reference</h3>
-                    <div class="search-box">
-                        <input type="text" id="command-search" placeholder="Search commands...">
-                    </div>
-                    <ul class="command-list">
-                        <li><a href="#Log">Log</a></li>
-                        <li><a href="#CreateXPWindow">CreateXPWindow</a></li>
-                        <li><a href="#GetPluginPath">GetPluginPath</a></li>
-                        <li><a href="#SystemPath">SystemPath</a></li>
-                        <li><a href="#ReloadProject">ReloadProject</a></li>
-                        <li><a href="#GetXPVersion">GetXPVersion</a></li>
-                        <li><a href="#SpeakString">SpeakString</a></li>
-                        <li><a href="#Include">Include</a></li>
-                        <li><a href="#LoadFont">LoadFont</a></li>
-                        <li><a href="#DrawXpText">DrawXpText</a></li>
-                        <li><a href="#DrawCustomText">DrawCustomText</a></li>
-                        <li><a href="#DrawRectangle">DrawRectangle</a></li>
-                        <li><a href="#DrawCustomQuad">DrawCustomQuad</a></li>
-                        <li><a href="#DrawLine">DrawLine</a></li>
-                        <li><a href="#DrawFilledCircle">DrawFilledCircle</a></li>
-                        <li><a href="#DrawCircle">DrawCircle</a></li>
-                        <li><a href="#LoadTexture">LoadTexture</a></li>
-                        <li><a href="#DrawTexture">DrawTexture</a></li>
-                        <li><a href="#SetUsersAircraft">SetUsersAircraft</a></li>
-                        <li><a href="#PlaceUserAtAirport">PlaceUserAtAirport</a></li>
-                        <li><a href="#PlaceUserAtLocation">PlaceUserAtLocation</a></li>
-                        <li><a href="#Find_Dataref">Find_Dataref</a></li>
-                        <li><a href="#Get_Dtf">Get_Dtf</a></li>
-                        <li><a href="#set">set</a></li>
-                        <li><a href="#hasChanged">hasChanged</a></li>
-                        <li><a href="#size_of">size_of</a></li>
-                        <li><a href="#to_uint8">to_uint8</a></li>
-                        <li><a href="#to_uint16">to_uint16</a></li>
-                        <li><a href="#to_uint32">to_uint32</a></li>
-                        <li><a href="#to_uint64">to_uint64</a></li>
-                        <li><a href="#to_pointer">to_pointer</a></li>
-                        <li><a href="#to_hex">to_hex</a></li>
-                        <li><a href="#to_cordination">to_cordination</a></li>
-                        <li><a href="#sleep">sleep</a></li>
-                        <li><a href="#SetWindowVisible">SetWindowVisible</a></li>
-                        <li><a href="#OnMouseClick">OnMouseClick</a></li>
-                        <li><a href="#OnMouseWheel">OnMouseWheel</a></li>
-                        <li><a href="#OnKey">OnKey</a></li>
-                        <li><a href="#OnCursor">OnCursor</a></li>
-                        <li><a href="#LoadCursorAtlas">LoadCursorAtlas</a></li>
-                        <li><a href="#DefineCursor">DefineCursor</a></li>
-                        <li><a href="#SetActiveCursor">SetActiveCursor</a></li>
-
-                        
-                        <li><a href="#onFrame">onFrame</a></li>
-                        <li><a href="#Draw">Draw</a></li>
-                        <li><a href="#PlaneLoaded">Draw</a></li>
-                        <li><a href="#PlaneUnloaded">Draw</a></li>
-                        <li><a href="#PlaneCrashed">Draw</a></li>
-                        <li><a href="#AirportLoaded">Draw</a></li>
-                        <li><a href="#SceneryLoaded">Draw</a></li>
-                        <li><a href="#LiveryLoaded">Draw</a></li>
-                        <li><a href="#EnteredVR">Draw</a></li>
-                        <li><a href="#ExitingVR">Draw</a></li>
-                        <li><a href="#FMODBankLoaded">Draw</a></li>
-                        <li><a href="#FMODBankUnloading">Draw</a></li>
-                        
-
-                    </ul>
-                </div>
-            </section>
-
-            <section id="installation">
-                <h2>Installation</h2>
-                <ol>
-                    <li>Download the latest package</li>
-                    <li>Extract to <code>X-Plane/Resources/plugins/</code></li>
-                    <li>Create a <code>scripts</code> folder in the BlizLua directory</li>
-                    <li>Place your Lua scripts (<code>.lua</code>) in the scripts folder</li>
-                    <li>Start/Restart X-Plane</li>
-                </ol>
-            </section>
-
-            <section id="api">
-                <h2>API Reference</h2>
-
-                <div class="command-section" id="Log">
-                    <h3>Log(text)</h3>
-                    <p>Make</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>text</code> (string): Anything you want to print</li>
-                    </ul>
-                    <pre><code2>bliz.Log("Hello World")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="CreateXPWindow">
-                    <h3>CreateXPWindow(title, position and size, visible, background)</h3>
-                    <p>Create a X-Plane window</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>title</code> (string): Name of the window</li>
-                        <li><code>position and size</code> (table): Put here in a table the position and size of the window</li>
-                        <li><code>visible</code> (boolean): Set to true if you want the window to be visible</li>
-                        <li><code>background</code> (boolean): Set true if you want a background</li>
-                    </ul>
-                    <pre><code2>win = bliz.CreateXPWindow({
-                        title = "Hello",
-                        position = {300, 300, 500, 500},
-                        visible = true,
-                        background = true,
-                    })</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="GetPluginPath">
-                    <h3>GetPluginPath()</h3>
-                    <p>This will return the plugin path</p>
-                    <h4>Parameters:</h4>
-                    <pre><code2>local path = bliz.file.GetPluginPath()</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <!-- Additional command sections -->
-                <div class="command-section" id="SystemPath">
-                    <h3>SystemPath()</h3>
-                    <p>This will return the X-Plane folder</p>
-                    <h4>Parameters:</h4>
-                    <pre><code2>local path = bliz.file.SystemPath()</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="ReloadProject">
-                    <h3>ReloadProject()</h3>
-                    <p>Will reload the project</p>
-                    <pre><code2>bliz.ReloadProject()</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="GetXPVersion">
-                    <h3>GetXPVersion()</h3>
-                    <p>Will return the current X-Plane version</p>
-                    <pre><code2>local version = bliz.GetXPVersion()</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="SpeakString">
-                    <h3>SpeakString(text)</h3>
-                    <p>Will speak the given text</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>text</code> (string): The text you want to speak</li>
-                    </ul>
-                    <pre><code2>bliz.SpeakString("I'm speaking!")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="Include">
-                    <h3>Include(name)</h3>
-                    <p>Will include a script to your project</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>name</code> (string): The name of the script</li>
-                    </ul>
-                    <pre><code2>bliz.Include("PFD")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="LoadFont">
-                    <h3>LoadFont(font_path)</h3>
-                    <p>Draw X-Plane default text</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>font_path</code> (string): The path to the font</li>
-                    </ul>
-                    <pre><code2>local font = bliz.LoadFont(GetPluginPath() .. "data/scripts/modules/fonts/arial.tff"
---Or to load default font:
-local font = bliz.LoadFont(bliz.font["ARIAL"])</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawXpText">
-                    <h3>DrawXpText(id, text, x, y, color)</h3>
-                    <p>Draw X-Plane default text</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>text</code> (string): The text you want to draw</li>
-                        <li><code>x</code> (number): The X position</li>
-                        <li><code>y</code> (number): The Y position"</li>
-                        <li><code>color</code> (table): A table of RGBA {n,n,n,n}</li>
-                    </ul>
-                    <pre><code2>bliz.DrawXpText(id, "Hello World", 100, 100, {1,1,1,1})</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawCustomText">
-                    <h3>DrawCustomText(id, text, x, y, size, align, color, font)</h3>
-                    <p>Draw a custom text with own font</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>text</code> (string): The text you want to draw</li>
-                        <li><code>x</code> (number): The X position</li>
-                        <li><code>y</code> (number): The Y position"</li>
-                        <li><code>size</code> (number): The size you want"</li>
-                        <li><code>align</code> (number): The align: "ALIGN_LEFT", "ALIGN_CENTER", "ALIGN_RIGHT""</li>
-                        <li><code>color</code> (table): A table of RGBA {n,n,n,n}</li>
-                    </ul>
-                    <pre><code2>bliz.gl.DrawCustomText(id, "Hello world", 100, 100, 20, ALIGN_CENTER, {1, 1, 1, 1}, font)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawRectangle">
-                    <h3>DrawRectangle(id, x, y, sizeX, sizeY, color)</h3>
-                    <p>Draw a rectangle</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>x</code> (number): The X position</li>
-                        <li><code>y</code> (number): The Y position"</li>
-                        <li><code>sizeX</code> (number): The sizeX you want"</li>
-                        <li><code>sizeY</code> (number): The sizeY you want"</li>
-                        <li><code>color</code> (table): A table of RGBA {n,n,n,n}</li>
-                    </ul>
-                    <pre><code2>bliz.gl.DrawRectangle(id, 150, 50, 50, 50, {1,1,1,1})</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawCustomQuad">
-                    <h3>DrawCustomQuad(id, x1, y1, x2, y2, x3, y3, x4, y4, color)</h3>
-                    <p>Will draw a quad in the shape you want choosing the 4 edges where to go</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>x1</code> (number): The X1 position</li>
-                        <li><code>y1</code> (number): The Y1 position"</li>
-                        <li><code>x2</code> (number): The X2 position</li>
-                        <li><code>y2</code> (number): The Y2 position"</li>
-                        <li><code>x3</code> (number): The X3 position</li>
-                        <li><code>y3</code> (number): The Y3 position"</li>
-                        <li><code>x4</code> (number): The X4 position</li>
-                        <li><code>y4</code> (number): The Y4 position"</li>
-                        <li><code>color</code> (table): A table of RGBA {n,n,n,n}</li>
-                    </ul>
-                    <pre><code2>bliz.gl.DrawCustomQuad(id, 150, 200, 40, 120, 30, 10, 40, 60, {1,1,1,1})</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawLine">
-                    <h3>DrawLine(id, x1, y1, x2, y2, lineWidth, color)</h3>
-                    <p>Will draw a line</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>x1</code> (number): The X1 position</li>
-                        <li><code>y1</code> (number): The Y1 position"</li>
-                        <li><code>x2</code> (number): The X2 position"</li>
-                        <li><code>y2</code> (number): The X2 position"</li>
-                        <li><code>lineWidth</code> (number): The thicknes of the line"</li>
-                        <li><code>color</code> (table): A table of RGBA {n,n,n,n}</li>
-                    </ul>
-                    <pre><code2>bliz.gl.DrawLine(id, 10, 50, 50, 100, 10, {1,1,1,1})</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawFilledCircle">
-                    <h3>DrawFilledCircle(id, x, y, radius, segments, color)</h3>
-                    <p>Will draw a filled circle</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>x</code> (number): The X position</li>
-                        <li><code>y</code> (number): The Y position"</li>
-                        <li><code>radius</code> (number): The  radius of the circle"</li>
-                        <li><code>segments</code> (number): The segments of a circle"</li>
-                        <li><code>color</code> (table): A table of RGBA {n,n,n,n}</li>
-                    </ul>
-                    <pre><code2>bliz.gl.DrawFilledCircle(id, 50, 50, 4, 360, {1,1,1,1})</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawCircle">
-                    <h3>DrawRectangle(id, x, y, radius, segments, lineWidth, color)</h3>
-                    <p>Will draw a not filled circle</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>x</code> (number): The X position</li>
-                        <li><code>y</code> (number): The Y position"</li>
-                        <li><code>sizeX</code> (number): The sizeX you want"</li>
-                        <li><code>sizeY</code> (number): The sizeY you want"</li>
-                        <li><code>color</code> (table): A table of RGBA {n,n,n,n}</li>
-                    </ul>
-                    <pre><code2>bliz.gl.DrawCircle(id, 100, 100, 50, 360, 5, {1,1,1,1})</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="LoadTexture">
-                    <h3>LoadTexture(path)</h3>
-                    <p>Will load the texture, like .png or .jpg</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>path</code> (string): Path to your image</li>
-                    </ul>
-                    <pre><code2>textureID = bliz.gl.LoadTexture(GetPluginPath() .. "data/resources/images/test.png")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DrawTexture">
-                    <h3>DrawTexture(id, x, y, width, height, texID)</h3>
-                    <p>Draw the texture on the window</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): You get this from the function "Draw"</li>
-                        <li><code>x</code> (number): The X position</li>
-                        <li><code>y</code> (number): The Y position"</li>
-                        <li><code>width</code> (number): The width you want"</li>
-                        <li><code>height</code> (number): The height you want"</li>
-                        <li><code>texID</code> (number): The number you got from LoadTexture</li>
-                    </ul>
-                    <pre><code2>bliz.gl.DrawTexture(id, 50, 150, 100, 100, textureID)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="SetUsersAircraft">
-                    <h3>SetUsersAircraft(path)</h3>
-                    <p>Change the aircraft</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>path</code> (string): The path to your aircraft WITH THE .ACF</li>
-                    </ul>
-                    <pre><code2>bliz.SetUsersAircraft(
-bliz.file.SystemPath() .. "Aircraft/Laminar Research/Cessna Citation X/Cessna_CitationX.acf")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="PlaceUserAtAirport">
-                    <h3>PlaceUserAtAirport(airport)</h3>
-                    <p>Will spawn the user at the airport you set</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>airport</code> (string): The name of the airport</li>
-                    </ul>
-                    <pre><code2>bliz.PlaceUserAtAirport("EDDM")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="PlaceUserAtLocation">
-                    <h3>PlaceUserAtLocation(latitudeDegrees, longitudeDegrees, elevationMetersMSL, headingDegreesTrue, speedMetersPerSecond)</h3>
-                    <p>Will reload the project</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>latitudeDegrees</code> (double): The lat of the position</li>
-                        <li><code>longitudeDegrees</code> (double): The lon of the position</li>
-                        <li><code>elevationMetersMSL</code> (double): The height to spawn in MSL</li>
-                        <li><code>headingDegreesTrue</code> (float): The true heading of the aircraft</li>
-                        <li><code>speedMetersPerSecond</code> (float): The speed in meter per second of the aircraft</li>
-                    </ul>
-                    <pre><code2>bliz.PlaceUserAtLocation(33.942791, -118.410042, 300.0, 250.0, 0.0)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="Find_Dataref">
-                    <h3>Find_Dataref(name)</h3>
-                    <p>Will load the dataref</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>name</code> (string): The name of the Dataref</li>
-                    </ul>
-                    <pre><code2>local dataref = bliz.Find_Dataref("sim/cockpit/autopilot/heading_mag")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="Get_Dtf">
-                    <h3>Get_Dtf(dataref)</h3>
-                    <p>Will return the dataref value</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>dataref</code> (number): The number you get from "Find_Dataref"</li>
-                    </ul>
-                    <pre><code2>get_dtr = bliz.Get_Dtf(dataref)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="set">
-                    <h3>set(value)</h3>
-                    <p>Set the dataref to a value you want</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>value</code> (any): The value you want to set to the dataref</li>
-                    </ul>
-                    <pre><code2>dataref:set(1)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="hasChanged">
-                    <h3>hasChanged()</h3>
-                    <p>Function get called when the dataref has changed</p>
-                    <h4>Parameters:</h4>
-                    <pre><code2>dataref:hasChanged(function(newVal) end)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="size_of">
-                    <h3>size_of(value)</h3>
-                    <p>Get the size of the type</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>value</code> (any): Put here like a string, int,...</li>
-                    </ul>
-                    <pre><code2>local string_s = "a"
-local size = bliz.size_of(string_s)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="to_uint8">
-                    <h3>to_uint8(number)</h3>
-                    <p>Will convert a number to a uint8</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>number</code> (number): A number you want to convert</li>
-                    </ul>
-                    <pre><code2>local numStr = bliz.to_uint8(255) --0 to 255</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="to_uint16">
-                    <h3>to_uint16(number)</h3>
-                    <p>Will convert a number to a uint16</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>number</code> (number): A number you want to convert</li>
-                    </ul>
-                    <pre><code2>local numStr = bliz.to_uint16(65535) --0 to 65535</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="to_uint32">
-                    <h3>to_uint32(number)</h3>
-                    <p>Will convert a number to a uint32</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>number</code> (number): A number you want to convert</li>
-                    </ul>
-                    <pre><code2>local numStr = bliz.to_uint32(4294967295) --0 to 4294967295</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="to_uint64">
-                    <h3>to_uint64(number)</h3>
-                    <p>Will convert a number to a uint64</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>number</code> (number): A number you want to convert</li>
-                    </ul>
-                    <pre><code2>local numStr = bliz.to_uint64(18446744073709551615) --0 to 18446744073709551615</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="to_pointer">
-                    <h3>to_pointer(value)</h3>
-                    <p>Convert value to a pointer</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>value</code> (any): Any value you want to convert</li>
-                    </ul>
-                    <pre><code2>local stringToPointer = "hello"
-local ptrStr = bliz.to_pointer(stringToPointer)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="to_hex">
-                    <h3>to_hex(value)</h3>
-                    <p>Convert value to hex</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>value</code> (any): Any value you want to convert</li>
-                    </ul>
-                    <pre><code2>local toHexString = "hello"
-local hex = bliz.to_hex(toHexString)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="to_cordination">
-                    <h3>to_cordination(table)</h3>
-                    <p>Convert table cordination</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>table</code> (number): A table of number</li>
-                    </ul>
-                    <pre><code2>local coordStr = bliz.to_cordination({250, 250})</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="sleep">
-                    <h3>sleep(number)</h3>
-                    <p>Sleep for a amount of time</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>number</code> (number): A number of time you want to sleep in seconds</li>
-                    </ul>
-                    <pre><code2>bliz.sleep(2)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                
-                <div class="command-section" id="SetWindowVisible">
-                    <h3>SetWindowVisible(visible)</h3>
-                    <p>Change the visibilty of the window</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>visible</code> (bool): A boolean to set it visible or not</li>
-                    </ul>
-                    <pre><code2>window:SetWindowVisible(true)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="OnMouseClick">
-                    <h3>OnMouseClick()</h3>
-                    <p>Get when someone click on the window</p>
-                    <pre><code2>win:OnMouseClick(function(x, y, is_down, button) end)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="OnMouseWheel">
-                    <h3>OnMouseWheel()</h3>
-                    <p>Get when someone scroll on the window</p>
-                    <pre><code2>win:OnMouseWheel(function(x, y, wheel, clicks) end)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="OnKey">
-                    <h3>OnKey()</h3>
-                    <p>Get when someone write on the window</p>
-                    <pre><code2>win:OnKey(function(key, flags, virtual_key, losing_focus) end)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="OnCursor">
-                    <h3>OnCursor()</h3>
-                    <p>Get when someone move the mouse on the window</p>
-                    <pre><code2>win:OnCursor(function(x, y) end) --use return 0,1,2 to change 
-                                  it if you need custom use LoadCursorAtlas
-                    </code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="LoadCursorAtlas">
-                    <h3>LoadCursorAtlas(windowID, texturePath)</h3>
-                    <p>Load cursor</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>windowID</code> (number): Window id</li>
-                        <li><code>texturePath</code> (string): Path to texture</li>
-                    </ul>
-                    <pre><code2>bliz.LoadCursorAtlas(win.id, GetPluginPath() .. "data/scripts/modules/mouse.png")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="DefineCursor">
-                    <h3>DefineCursor(name, x, y, width, height, cursorPosX, cursorPosY)</h3>
-                    <p>Cut a cursor in a texture, check <a href=#examples class="back-to-index">examples</a> for more info</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>name</code> (string): Name of the cursor </li>
-                        <li><code>x</code> (number): The X position in your texture</li>
-                        <li><code>y</code> (number): The Y position in your texture</li>
-                        <li><code>width</code> (number): The width of the cursor in the texture</li>
-                        <li><code>height</code> (number): The height of the cursor in the texture</li>
-                        <li><code>cursorPosX</code> (number): The position X of the cursor</li>
-                        <li><code>cursorPosY</code> (number): The position X of the cursor</li>
-                    </ul>
-                    <pre><code2>bliz.DefineCursor("drag", 64, 0, 32, 32, 10, -25)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="SetActiveCursor">
-                    <h3>SetActiveCursor(id, name)</h3>
-                    <p>Set the cursor you definided has default</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): Window id </li>
-                        <li><code>name</code> (number): The name you put inside <a href="#DefineCursor" class="back-to-index">DefineCursor</a></li>
-                    </ul>
-                    <pre><code2>bliz.SetActiveCursor(win.id, "drag")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="LoadAnimatedCursor">
-                    <h3>LoadAnimatedCursor(id, texturePath, name)</h3>
-                    <p>Load animated cursor, only .gifs</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): Window ID</li>
-                        <li><code>texturePath</code> (string): Path to the cursor</li>
-                        <li><code>name</code> (string): The name you want to call the cursor</li>
-                    </ul>
-                    <pre><code2>bliz.LoadAnimatedCursor(win.id, GetPluginPath() .. "data/scripts/modules/AnimatedMouse.gif", "idle")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="StartCursorAnimation">
-                    <h3>StartCursorAnimation(id, name)</h3>
-                    <p>Show the animation cursor</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): Window id </li>
-                        <li><code>name</code> (number): The name you put inside <a href="#DefineCursor" class="back-to-index">DefineCursor</a></li>
-                    </ul>
-                    <pre><code2>bliz.StartCursorAnimation(win.id, "idle")</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="StopCursorAnimation">
-                    <h3>StopCursorAnimation(id)</h3>
-                    <p>Stop the animation of cursor</p>
-                    <h4>Parameters:</h4>
-                    <ul>
-                        <li><code>id</code> (number): Window id </li>
-                    </ul>
-                    <pre><code2>bliz.StopCursorAnimation(win.id)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-
-                <div class="command-section" id="onFrame">
-                    <h3>onFrame()</h3>
-                    <p>Called every frame</p>
-                    <pre><code2>function onFrame() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="Draw">
-                    <h3>Draw()</h3>
-                    <p>Draw on your window</p>
-                    <pre><code2>win:Draw(function(id) end)</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="PlaneLoaded">
-                    <h3>PlaneLoaded()</h3>
-                    <p>Called when the plane is loaded</p>
-                    <pre><code2>function PlaneLoaded() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="PlaneUnloaded">
-                    <h3>PlaneUnloaded()</h3>
-                    <p>Called when the plane is unloaded</p>
-                    <pre><code2>function PlaneUnloaded() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="PlaneCrashed">
-                    <h3>PlaneCrashed()</h3>
-                    <p>Called when the plane is crashed</p>
-                    <pre><code2>function PlaneCrashed() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="AirportLoaded">
-                    <h3>AirportLoaded()</h3>
-                    <p>Called when the airport is loaded</p>
-                    <pre><code2>function AirportLoaded() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="SceneryLoaded">
-                    <h3>SceneryLoaded()</h3>
-                    <p>Called when the scenery is loaded</p>
-                    <pre><code2>function SceneryLoaded() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="LiveryLoaded">
-                    <h3>LiveryLoaded()</h3>
-                    <p>Called when the livery is loaded</p>
-                    <pre><code2>function LiveryLoaded() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="EnteredVR">
-                    <h3>EnteredVR()</h3>
-                    <p>Called when entering VR</p>
-                    <pre><code2>function EnteredVR() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="ExitingVR">
-                    <h3>ExitingVR()</h3>
-                    <p>Called when exiting VR</p>
-                    <pre><code2>function ExitingVR() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="FMODBankLoaded">
-                    <h3>FMODBankLoaded()</h3>
-                    <p>Called when FMOD Bank is loaded</p>
-                    <pre><code2>function FMODBankLoaded() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-                <div class="command-section" id="FMODBankUnloading">
-                    <h3>FMODBankUnloading()</h3>
-                    <p>Called when FMOD Bank is unloading</p>
-                    <pre><code2>function FMODBankUnloading() end</code2></pre>
-                    <a href="#command-index" class="back-to-index">↑ Back to Index</a>
-                </div>
-
-            </section>
-
-            <section id="examples">
-                <h2>Examples</h2>
-                <div class="command-section">
-                    <h3>Altitude Display</h3>
-                    <pre><code2>local altitude = xlua.find_dataref("sim/cockpit2/gauges/indicators/altitude_ft_pilot")
-
-function draw()
-    xlua.draw_text(50, 50, "ALT: " .. math.floor(altitude.value), 1, 1, 1, 1)
-end
-
-xlua.register_update(draw)</code2></pre>
-                </div>
-            </section>
-
-            <section id="faq">
-                <h2>Frequently Asked Questions</h2>
-                <div class="command-section">
-                    <h3>Script Reloading</h3>
-                    <p>Use <code>xlua.reload_scripts()</code> or create a keyboard shortcut:</p>
-                    <pre><code2>xlua.register_command("sim/operations/reload_scripts", xlua.reload_scripts)</code2></pre>
-                </div>
-            </section>
-
-            <section id="support">
-                <h2>Support</h2>
-                <ul>
-                    <li>Email: support@xluaconnect.com</li>
-                    <li>Forum: community.xluaconnect.com</li>
-                    <li>Discord: discord.gg/xluaconnect</li>
-                </ul>
-            </section>
-        </main>
+    <div class="container">
+        <h1>Changelog</h1>
+        <div class="changelog-entry">
+        <h2>Version 1.0 B1 - June 21, 2025</h2>
+        <ul>
+            <li>Fixed createThread crashing</li>
+            <li>Fixed openGL bugs</li>
+            <li>Change draw system</li>
+            <li>Added isThreadAlive</li>
+            <li>Added pauseThread</li>
+            <li>Added stopThread</li>
+            <li>Added resumeThread</li>
+            <li>Added Bliz Premium</li>
+            <li>Added RegisterDrawCallback</li>
+            <li>Added Imgui</li>
+            <li>Added CreateImGuiWindow</li>
+            <li>Added Imgui:Text</li>
+            <li>Added Imgui:Button</li>
+            <li>Added Imgui:Checkbox</li>
+            <li>Added Imgui:SliderFloat</li>
+            <li>Added Imgui:SliderInt</li>
+            <li>Added Imgui:Separator</li>
+            <li>Added Imgui:SameLine</li>
+            <li>Added Imgui:GetWindowWidth</li>
+            <li>Added Imgui:GetWindowHeight</li>
+            <li>Added Imgui:NewLine</li>
+            <li>Added Imgui:Spacing</li>
+            <li>Added Imgui:Dummy</li>
+            <li>Added Imgui:SetNextItemWidth</li>
+            <li>Added Imgui:SetCursorPos</li>
+            <li>Added Imgui:InputText</li>
+            <li>Added Imgui:InputTextMultiline</li>
+            <li>Added Imgui:InputFloat</li>
+            <li>Added Imgui:InputInt</li>
+            <li>Added Imgui:InputDouble</li>
+            <li>Added Imgui:Combo</li>
+            <li>Added Imgui:ListBox</li>
+            <li>Added Imgui:ColorEdit3</li>
+            <li>Added Imgui:ColorEdit4</li>
+            <li>Added Imgui:ColorPicker3</li>
+            <li>Added Imgui:ColorPicker4</li>
+            <li>Added Imgui:CollapsingHeader</li>
+            <li>Added Imgui:TreeNode</li>
+            <li>Added Imgui:TreePop</li>
+            <li>Added Imgui:BeginTable</li>
+            <li>Added Imgui:EndTable</li>
+            <li>Added Imgui:TableNextRow</li>
+            <li>Added Imgui:TableNextColumn</li>
+            <li>Added Imgui:TableSetColumnIndex</li>
+            <li>Added Imgui:BeginMenuBar</li>
+            <li>Added Imgui:EndMenuBar</li>
+            <li>Added Imgui:BeginMenu</li>
+            <li>Added Imgui:EndMenu</li>
+            <li>Added Imgui:MenuItem</li>
+            <li>Added Imgui:BeginTooltip</li>
+            <li>Added Imgui:EndTooltip</li>
+            <li>Added Imgui:BeginPopup</li>
+            <li>Added Imgui:EndPopup</li>
+            <li>Added Imgui:OpenPopup</li>
+            <li>Added Imgui:CloseCurrentPopup</li>
+            <li>Added Imgui:BeginGroup</li>
+            <li>Added Imgui:EndGroup</li>
+            <li>Added Imgui:Indent</li>
+            <li>Added Imgui:Unindent</li>
+            <li>Added Imgui:GetCursorPos</li>
+            <li>Added Imgui:GetCursorScreenPos</li>
+            <li>Added Imgui:ProgressBar</li>
+            <li>Added Imgui:PlotLines</li>
+            <li>Added Imgui:PlotHistogram</li>
+            <li>Added Imgui:TextColored</li>
+            <li>Added Imgui:TextWrapped</li>
+            <li>Added Imgui:TextDisabled</li>
+            <li>Added Imgui:BulletText</li>
+            <li>Added Imgui:LabelText</li>
+            <li>Added Imgui:ArrowButton</li>
+            <li>Added Imgui:Selectable</li>
+            <li>Added Imgui:RadioButton</li>
+            <li>Added Imgui:DragFloat</li>
+            <li>Added Imgui:DragInt</li>
+            <li>Added Imgui:DragFloatRange2</li>
+            <li>Added Imgui:DragIntRange2</li>
+            <li>Added Imgui:Image</li>
+            <li>Added Imgui:ImageButton</li>
+            <li>Added Imgui:SetScrollHereY</li>
+            <li>Added Imgui:SetKeyboardFocusHere</li>
+            <li>Added Imgui:IsItemHovered</li>
+            <li>Added Imgui:IsItemClicked</li>
+            <li>Added Imgui:IsItemActive</li>
+            <li>Added Imgui:Columns</li>
+            <li>Added Imgui:NextColumn</li>
+        </ul>
+        </div>
+
+        <div class="changelog-entry">
+        <h2>Version 0.3 (Beta) - June 21, 2025</h2>
+            <ul>
+                <li>Fixed \n bug </li>
+                <li>Added CreateOwnManip</li>
+                <li>Added clamp</li>
+                <li>Added lerp</li>
+                <li>Added inverseLerp</li>
+                <li>Added remap</li>
+                <li>Added wrap</li>
+                <li>Added sign</li>
+                <li>Added vec2Length</li>
+                <li>Added vec3Length</li>
+                <li>Added vec2Normalize</li>
+                <li>Added vec3Normalize</li>
+                <li>Added vec2Dot</li>
+                <li>Added vec3Dot</li>
+                <li>Added vec3Cross</li>
+                <li>Added vec2Angle</li>
+                <li>Added vec3Angle</li>
+                <li>Added vec3Project</li>
+                <li>Added distance2D</li>
+                <li>Added distance3D</li>
+                <li>Added midpoint</li>
+                <li>Added lineIntersection2D</li>
+                <li>Added pointInTriangle</li>
+                <li>Added rotatePoint</li>
+                <li>Added headingToVector</li>
+                <li>Added vectorToHeading</li>
+                <li>Added normalizeHeading</li>
+                <li>Added headingDifference</li>
+                <li>Added latLonBearing</li>
+                <li>Added moveLatLon</li>
+                <li>Added airspeedToMach</li>
+                <li>Added machToAirspeed</li>
+                <li>Added feetToMeters</li>
+                <li>Added metersToFeet</li>
+                <li>Added knotsToMps</li>
+                <li>Added mpsToKnots</li>
+                <li>Added perlinNoise2D</li>
+                <li>Added perlinNoise3D</li>
+                <li>Added smoothNoise</li>
+                <li>Added smoothStep</li>
+                <li>Added bezier2D</li>
+                <li>Added bezier3D</li>
+                <li>Added catmullRomSpline</li>
+                <li>Added mat4Identity</li>
+                <li>Added mat4Translate</li>
+                <li>Added mat4RotateX</li>
+                <li>Added mat4RotateY</li>
+                <li>Added mat4RotateZ</li>
+                <li>Added mat4Scale</li>
+                <li>Added mat4Multiply</li>
+                <li>Added transformPoint</li>
+                <li>Added solveQuadratic</li>
+                <li>Added solveCubic</li>
+                <li>Added factorial</li>
+                <li>Added binomialCoefficient</li>
+                <li>Added gamma</li>
+                <li>Added erf</li>
+                <li>Added ShiftLeft</li>
+                <li>Added ShiftRight</li>
+                <li>Added BitAnd</li>
+                <li>Added BitOr</li>
+                <li>Added BitXor</li>
+                <li>Added BitNot</li>
+                <li>Added EnableFog</li>
+                <li>Added DisableFog</li>   
+                <li>Added EnableFog</li>
+                <li>Added DisableFog</li>
+                <li>Added EnableDepth</li>
+                <li>Added DisableDepth</li>
+                <li>Added ClearDepth</li>
+                <li>Added SetBlendMode</li>
+                <li>Added PushMatrix</li>
+                <li>Added PopMatrix</li>
+                <li>Added Translate</li>
+                <li>Added Rotate</li>
+                <li>Added Scale</li>
+                <li>Added BeginRenderTarget</li>
+                <li>Added EndRenderTarget</li>
+                <li>Added GetRenderTexture</li>
+                <li>Added DrawVerticalGradient</li>
+                <li>Added DrawHorizontalGradient</li>
+                <li>Added LoadShader</li>
+                <li>Added UseShader</li>
+                <li>Added SetShaderUniform</li>
+                <li>Added EnableCull</li>
+                <li>Added DisableCull</li>
+                <li>Added EnableWireframe</li>
+                <li>Added DisableWireframe</li>
+                <li>Added FailSystem</li>
+                <li>Added Crypt scrpits system (only avaible in DMs)</li>
+            </ul>
+        </div>
+
+        <div class="changelog-entry">
+            <h2>Version 0.2 (Beta) - June 21, 2025</h2>
+            <ul>
+                <li>Added function OnClosing()</li>
+                <li>Added SetPlaybackOffset</li>
+                <li>Added GetPlaybackOffset</li>
+                <li>Added GetSoundDuration</li>
+                <li>Added ResumeSound</li>
+                <li>Added PauseSound</li>
+                <li>Added StopSound</li>
+                <li>Added Playsound</li>
+                <li>Added LoadSound</li>
+                <li>Added BeginClip</li>
+                <li>Added EndClip</li>
+                <li>Added LoadTextureRegion</li>
+                <li>Added DrawRotatedTexture</li>
+                <li>Added SetClipboardText</li>
+                <li>Added UnregisterUpdateCallback</li>
+                <li>Added RegisterUpdateCallback</li>
+                <li>Added CreateNotification</li>
+                <li>Added CreateYesNoWarning</li>
+                <li>Added CreateWarning</li>
+                <li>Added DownloadFileFromURL</li>
+                <li>Added DrawWideLine</li>
+                <li>Added DrawLinePattern</li>
+                <li>Added DrawBezierLineQ</li>
+                <li>Added DrawBezierLineC</li>
+                <li>Added DrawArc</li>
+            </ul>
+        </div>
+
+        <div class="changelog-entry">
+            <h2>Version 0.1 (Beta) - April 02, 2025</h2>
+            <ul>
+                <li>Fixed bug</li>
+            </ul>
+        </div>
+        <a href="#" class="back-to-top">⬆ Back to top</a>
     </div>
 
-    <script>
-        // Enhanced smooth scrolling with offset
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                const offset = 80;
-                
-                window.scrollTo({
-                    top: target.offsetTop - offset,
-                    behavior: 'smooth'
-                });
-                
-                history.pushState(null, null, this.href);
-            });
-        });
-
-        // Command search functionality
-        document.getElementById('command-search').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const commands = document.querySelectorAll('.command-list a');
-            
-            commands.forEach(command => {
-                const text = command.textContent.toLowerCase();
-                command.style.display = text.includes(searchTerm) ? 'block' : 'none';
-            });
-        });
-
-        // Section highlighting
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section, .command-section');
-            const navLinks = document.querySelectorAll('.sidebar a, .command-list a');
-            
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= 100 && rect.bottom >= 100) {
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${section.id}`) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
