@@ -217,6 +217,7 @@
                 <a href="#Dataref">Dataref</a>
                 <a href="#Command">Command</a>
                 <a href="#Xplane-Def">Xplane-Def</a>
+                <a href="#ImGui">ImGui</a>
                 <a href="#Files">Files</a>
                 <a href="#OpenGL">OpenGL</a>
                 <a href="#OpenAL">OpenAL</a>
@@ -399,9 +400,23 @@
 
                         <h3>PLUGIN_MENU</h3>
                         <h3>AIRCRAFT_MENU</h3>
-                        <h3>Menu_NoCheck</h3>
-                        <h3>Menu_Unchecked</h3>
-                        <h3>Menu_Checked</h3>
+                        <h3>MENU_NOCHECK</h3>
+                        <h3>MENU_UNCHECKED</h3>
+                        <h3>MENU_CHECKED</h3>
+
+                        <h3>XPLM_PROBEHITTERRAIN</h3>
+                        <h3>XPLM_PROBEERROR</h3>
+                        <h3>XPLM_PROBEMISSED</h3>
+
+                        <h3>DECORATION_NONE</h3>
+                        <h3>DECORATION_RECTANGLE</h3>
+
+                        <h3>XPLM_PHASE_MODERN3D</h3>
+                        <h3>XPLM_PHASE_FIRSTCOCKPIT</h3>
+                        <h3>XPLM_PHASE_PANEL</h3>
+                        <h3>XPLM_PHASE_GAUGES</h3>
+                        <h3>XPLM_PHASE_WINDOW</h3>
+                        <h3>XPLM_PHASE_LASTCOCKPIT</h3>
                 </div>
             </section>
 
@@ -482,7 +497,7 @@
                 <section id="Debug">
                     <h2>Debugging</h2>
                     <div class="command-section" id="Log">
-                        <h3>bliz.Log(text)</h3>
+                        <h3>Log(text)</h3>
                         <p>Print a message to the console</p>
                         <table class="param-table">
                             <tr>
@@ -496,7 +511,7 @@
                                 <td>The string you want to print</td>
                             </tr>
                         </table>
-                        <pre><code>bliz.Log("Hello World")</code></pre>
+                        <pre><code>Log("Hello World")</code></pre>
                     </div>
 
                     <div class="command-section" id="Log">
@@ -560,9 +575,9 @@ bliz.Log("ERROR", "Hello World")
                     </div>
 
                     <div class="command-section" id="Draw">
-                        <h3>Draw(id)</h3>
+                        <h3>Draw(left, right, top, bottom)</h3>
                         <p>Draw inside the window, check <a href="#OpenGL">OpenGL</a> for more</p>
-                        <pre><code>win:Draw(function(id) end)</code></pre>
+                        <pre><code>win:Draw(function(left, right, top, bottom) end)</code></pre>
                     </div>
 
                     <div class="command-section" id="OnMouseClick">
@@ -581,6 +596,39 @@ bliz.Log("ERROR", "Hello World")
                         <h3>OnCursor(x, y)</h3>
                         <p>Return the position of mouse and can be choose the visibilty, to change mouse icon check <a href="#Utils">Utils</a></p>
                         <pre><code>win:OnCursor(function(x, y) end)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="RegisterDrawCallback">
+                        <h3>bliz.RegisterDrawCallback(func, phase, before, refcon)</h3>
+                        <p>Create a register call back</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>func</td>
+                                <td>function</td>
+                                <td>The function you want that get called</td>
+                            </tr>
+                            <tr>
+                                <td>phase</td>
+                                <td>int</td>
+                                <td>It's the phase you want</td>
+                            </tr>
+                            <tr>
+                                <td>before</td>
+                                <td>int</td>
+                                <td>Before draw?</td>
+                            </tr>
+                            <tr>
+                                <td>refcon</td>
+                                <td>any</td>
+                                <td>Not needed, let this empty if you don't need this</td>
+                            </tr>
+                        </table>
+                        <pre><code>bliz.RegisterDrawCallback(function() end, XPLM_PHASE_GAUGES, 1)</code></pre>
                     </div>
 
                     <div class="command-section" id="RegisterUpdateCallback">
@@ -699,7 +747,7 @@ bliz.Log("ERROR", "Hello World")
                     </div>
     
                     <div class="command-section" id="GetDtf">
-                        <h3>bliz.DrawXpText(dataref)</h3>
+                        <h3>bliz.GetDtf(dataref)</h3>
                         <p>Get the value of the dataref</p>
                         <table class="param-table">
                             <tr>
@@ -713,7 +761,7 @@ bliz.Log("ERROR", "Hello World")
                                 <td>Put the dataref you got from <a href = "#Find_Dataref">Find_Dataref</a></href></td>
                             </tr>
                         </table>
-                        <pre><code>local get_dtr = bliz.Get_Dtf(dataref)</code></pre>
+                        <pre><code>local get_dtr = bliz.GetDtf(dataref)</code></pre>
                     </div>
     
                     <div class="command-section" id="SetDtf">
@@ -881,6 +929,1404 @@ bliz.Log("ERROR", "Hello World")
                     </div>
                 </section> 
             </section>
+
+             <section id="ImGui">
+                <h2>ImGui</h2>
+                    <div class="command-section" id="CreateImGuiWindow">
+                        <h3>bliz.CreateImGuiWindow(config)</h3>
+                        <p>Create a new Imgui window</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>title</td>
+                                <td>string</td>
+                                <td>Window title</td>
+                            </tr>
+                            <tr>
+                                <td>position</td>
+                                <td>table</td>
+                                <td>[x, y, width, height]</td>
+                            </tr>
+                            <tr>
+                                <td>decoration</td>
+                                <td>int</td>
+                                <td>Use the type of the decoraiton</td>
+                            </tr>
+                            <tr>
+                                <td>resize_limits</td>
+                                <td>table</td>
+                                <td>Use the size limits</td>
+                            </tr>
+                            <tr>
+                                <td>draw_callback</td>
+                                <td>function</td>
+                                <td>Tell the function to draw</td>
+                            </tr>
+                        </table>
+                        <pre><code>local win = bliz.CreateImGuiWindow({
+    title = "ImGui Commands Test Window",
+    position = {100, 100, 600, 500},
+    decoration = 1, -- xplm_WindowDecorationRoundRectangle
+    resize_limits = {300, 300, 1000, 800},
+    draw_callback = function(self)  end
+})</code></pre>
+                    </div>
+
+                    <div class="command-section" id="TextColored">
+                        <h3>self:TextColored(r, g, b, a, text)</h3>
+                        <p>Create colored text</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>r, g, b, a</td>
+                                <td>number</td>
+                                <td>Color components (0.0 to 1.0)</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>string</td>
+                                <td>The text to display</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:TextColored(0.0, 0.8, 0.0, 1.0, "Green Text")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="TextDisabled">
+                        <h3>self:TextDisabled(text)</h3>
+                        <p>Create disabled/grayed out text</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>string</td>
+                                <td>The text to display</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:TextDisabled("Inactive text")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="TextWrapped">
+                        <h3>self:TextWrapped(text)</h3>
+                        <p>Create text that wraps to fit window width</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>string</td>
+                                <td>The text to display (auto-wraps)</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:TextWrapped("Long text that automatically wraps...")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="BulletText">
+                        <h3>self:BulletText(text)</h3>
+                        <p>Create bullet point text</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>string</td>
+                                <td>The bullet point text</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:BulletText("List item 1")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="LabelText">
+                        <h3>self:LabelText(label, text)</h3>
+                        <p>Create labeled text (label + value)</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>The label text</td>
+                            </tr>
+                            <tr>
+                                <td>text</td>
+                                <td>string</td>
+                                <td>The value text</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:LabelText("Status:", "Active")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Button">
+                        <h3>self:Button(label)</h3>
+                        <p>Create a clickable button</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Button text</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:Button("Click Me") then Log("Button clicked!")  end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Checkbox">
+                        <h3>self:Checkbox(label, value)</h3>
+                        <p>Create a checkbox</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Checkbox label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>boolean</td>
+                                <td>Current state</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:Checkbox("Enable", isEnabled)
+                    if changed then
+                        isEnabled = not isEnabled
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="RadioButton">
+                        <h3>self:RadioButton(label, active)</h3>
+                        <p>Create a radio button</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Radio button label</td>
+                            </tr>
+                            <tr>
+                                <td>active</td>
+                                <td>boolean</td>
+                                <td>Whether this option is selected</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:RadioButton("Option 1", selected == 1) then
+                        selected = 1
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="ArrowButton">
+                        <h3>self:ArrowButton(id, direction)</h3>
+                        <p>Create an arrow button</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>string</td>
+                                <td>Unique identifier</td>
+                            </tr>
+                            <tr>
+                                <td>direction</td>
+                                <td>integer</td>
+                                <td>0=left, 1=right, 2=up, 3=down</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:ArrowButton("myArrow", 0) then Log("Left arrow clicked") end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Selectable">
+                        <h3>self:Selectable(label, selected)</h3>
+                        <p>Create a selectable item</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Item label</td>
+                            </tr>
+                            <tr>
+                                <td>selected</td>
+                                <td>boolean</td>
+                                <td>Current selection state</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed, newState = self:Selectable("Item 1", isSelected)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Separator">
+                        <h3>self:Separator()</h3>
+                        <p>Draw a horizontal separator line</p>
+                        <pre><code>self:Separator()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="InputText">
+                        <h3>self:InputText(label, value, maxLength)</h3>
+                        <p>Create a single-line text input</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Input label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>string</td>
+                                <td>Current text value</td>
+                            </tr>
+                            <tr>
+                                <td>maxLength</td>
+                                <td>integer</td>
+                                <td>Maximum character length</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed, newText = self:InputText("Name:", currentName, 50)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="InputTextMultiline">
+                        <h3>self:InputTextMultiline(label, value, maxLength, width, height)</h3>
+                        <p>Create a multi-line text input</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Input label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>string</td>
+                                <td>Current text value</td>
+                            </tr>
+                            <tr>
+                                <td>maxLength</td>
+                                <td>integer</td>
+                                <td>Maximum character length</td>
+                            </tr>
+                            <tr>
+                                <td>width</td>
+                                <td>number</td>
+                                <td>Input field width</td>
+                            </tr>
+                            <tr>
+                                <td>height</td>
+                                <td>number</td>
+                                <td>Input field height</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:InputTextMultiline("Description:", text, 1024, 300, 100)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="InputFloat">
+                        <h3>self:InputFloat(label, value, step, stepFast, format)</h3>
+                        <p>Create a float number input</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Input label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>number</td>
+                                <td>Current float value</td>
+                            </tr>
+                            <tr>
+                                <td>step</td>
+                                <td>number</td>
+                                <td>Step increment</td>
+                            </tr>
+                            <tr>
+                                <td>stepFast</td>
+                                <td>number</td>
+                                <td>Fast step increment</td>
+                            </tr>
+                            <tr>
+                                <td>format</td>
+                                <td>string</td>
+                                <td>Display format (e.g., "%.2f")</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:InputFloat("Value:", 1.5, 0.1, 1.0, "%.2f")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="InputInt">
+                        <h3>self:InputInt(label, value, step, stepFast)</h3>
+                        <p>Create an integer number input</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Input label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>integer</td>
+                                <td>Current integer value</td>
+                            </tr>
+                            <tr>
+                                <td>step</td>
+                                <td>integer</td>
+                                <td>Step increment</td>
+                            </tr>
+                            <tr>
+                                <td>stepFast</td>
+                                <td>integer</td>
+                                <td>Fast step increment</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:InputInt("Count:", 10, 1, 10)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="InputDouble">
+                        <h3>self:InputDouble(label, value, step, stepFast, format)</h3>
+                        <p>Create a double precision number input</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Input label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>number</td>
+                                <td>Current double value</td>
+                            </tr>
+                            <tr>
+                                <td>step</td>
+                                <td>number</td>
+                                <td>Step increment</td>
+                            </tr>
+                            <tr>
+                                <td>stepFast</td>
+                                <td>number</td>
+                                <td>Fast step increment</td>
+                            </tr>
+                            <tr>
+                                <td>format</td>
+                                <td>string</td>
+                                <td>Display format (e.g., "%.6f")</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:InputDouble("Precise:", 1.234567, 0.01, 0.1, "%.6f")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="SliderFloat">
+                        <h3>self:SliderFloat(label, value, min, max)</h3>
+                        <p>Create a float slider</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Slider label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>number</td>
+                                <td>Current value</td>
+                            </tr>
+                            <tr>
+                                <td>min</td>
+                                <td>number</td>
+                                <td>Minimum value</td>
+                            </tr>
+                            <tr>
+                                <td>max</td>
+                                <td>number</td>
+                                <td>Maximum value</td>
+                            </tr>
+                        </table>
+                        <pre><code>value = self:SliderFloat("Volume:", value, 0.0, 1.0)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="SliderInt">
+                        <h3>self:SliderInt(label, value, min, max)</h3>
+                        <p>Create an integer slider</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Slider label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>integer</td>
+                                <td>Current value</td>
+                            </tr>
+                            <tr>
+                                <td>min</td>
+                                <td>integer</td>
+                                <td>Minimum value</td>
+                            </tr>
+                            <tr>
+                                <td>max</td>
+                                <td>integer</td>
+                                <td>Maximum value</td>
+                            </tr>
+                        </table>
+                        <pre><code>value = self:SliderInt("Size:", value, 0, 100)</code></pre>
+                    </div>
+                    <div class="command-section" id="DragFloat">
+                        <h3>self:DragFloat(label, value, speed, min, max, format)</h3>
+                        <p>Create a draggable float control</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Control label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>number</td>
+                                <td>Current value</td>
+                            </tr>
+                            <tr>
+                                <td>speed</td>
+                                <td>number</td>
+                                <td>Drag speed multiplier</td>
+                            </tr>
+                            <tr>
+                                <td>min</td>
+                                <td>number</td>
+                                <td>Minimum value</td>
+                            </tr>
+                            <tr>
+                                <td>max</td>
+                                <td>number</td>
+                                <td>Maximum value</td>
+                            </tr>
+                            <tr>
+                                <td>format</td>
+                                <td>string</td>
+                                <td>Display format</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:DragFloat("Value:", val, 0.5, 0.0, 100.0, "%.1f")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="DragInt">
+                        <h3>self:DragInt(label, value, speed, min, max, format)</h3>
+                        <p>Create a draggable integer control</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Control label</td>
+                            </tr>
+                            <tr>
+                                <td>value</td>
+                                <td>integer</td>
+                                <td>Current value</td>
+                            </tr>
+                            <tr>
+                                <td>speed</td>
+                                <td>number</td>
+                                <td>Drag speed multiplier</td>
+                            </tr>
+                            <tr>
+                                <td>min</td>
+                                <td>integer</td>
+                                <td>Minimum value</td>
+                            </tr>
+                            <tr>
+                                <td>max</td>
+                                <td>integer</td>
+                                <td>Maximum value</td>
+                            </tr>
+                            <tr>
+                                <td>format</td>
+                                <td>string</td>
+                                <td>Display format</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:DragInt("Count:", val, 1, 0, 100, "%d")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="DragFloatRange2">
+                        <h3>self:DragFloatRange2(label, currentMin, currentMax, speed, min, max, format)</h3>
+                        <p>Create a draggable float range control</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Control label</td>
+                            </tr>
+                            <tr>
+                                <td>currentMin</td>
+                                <td>number</td>
+                                <td>Current minimum value</td>
+                            </tr>
+                            <tr>
+                                <td>currentMax</td>
+                                <td>number</td>
+                                <td>Current maximum value</td>
+                            </tr>
+                            <tr>
+                                <td>speed</td>
+                                <td>number</td>
+                                <td>Drag speed multiplier</td>
+                            </tr>
+                            <tr>
+                                <td>min</td>
+                                <td>number</td>
+                                <td>Absolute minimum</td>
+                            </tr>
+                            <tr>
+                                <td>max</td>
+                                <td>number</td>
+                                <td>Absolute maximum</td>
+                            </tr>
+                            <tr>
+                                <td>format</td>
+                                <td>string</td>
+                                <td>Display format</td>
+                            </tr>
+                        </table>
+                        <pre><code>local min, max, changed = self:DragFloatRange2("Range:", 0, 100, 0.5, 0, 200, "%.1f")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="DragIntRange2">
+                        <h3>self:DragIntRange2(label, currentMin, currentMax, speed, min, max, format)</h3>
+                        <p>Create a draggable integer range control</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Control label</td>
+                            </tr>
+                            <tr>
+                                <td>currentMin</td>
+                                <td>integer</td>
+                                <td>Current minimum value</td>
+                            </tr>
+                            <tr>
+                                <td>currentMax</td>
+                                <td>integer</td>
+                                <td>Current maximum value</td>
+                            </tr>
+                            <tr>
+                                <td>speed</td>
+                                <td>number</td>
+                                <td>Drag speed multiplier</td>
+                            </tr>
+                            <tr>
+                                <td>min</td>
+                                <td>integer</td>
+                                <td>Absolute minimum</td>
+                            </tr>
+                            <tr>
+                                <td>max</td>
+                                <td>integer</td>
+                                <td>Absolute maximum</td>
+                            </tr>
+                            <tr>
+                                <td>format</td>
+                                <td>string</td>
+                                <td>Display format</td>
+                            </tr>
+                        </table>
+                        <pre><code>local min, max, changed = self:DragIntRange2("Range:", 0, 100, 1, 0, 200, "%d")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Combo">
+                        <h3>self:Combo(label, selectedIndex, items)</h3>
+                        <p>Create a combo box dropdown</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Combo box label</td>
+                            </tr>
+                            <tr>
+                                <td>selectedIndex</td>
+                                <td>integer</td>
+                                <td>Currently selected index (1-based)</td>
+                            </tr>
+                            <tr>
+                                <td>items</td>
+                                <td>table</td>
+                                <td>Array of string options</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:Combo("Fruit:", 1, {"Apple", "Banana", "Cherry"})</code></pre>
+                    </div>
+
+                    <div class="command-section" id="ListBox">
+                        <h3>self:ListBox(label, selectedIndex, items)</h3>
+                        <p>Create a list box</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>List box label</td>
+                            </tr>
+                            <tr>
+                                <td>selectedIndex</td>
+                                <td>integer</td>
+                                <td>Currently selected index (1-based)</td>
+                            </tr>
+                            <tr>
+                                <td>items</td>
+                                <td>table</td>
+                                <td>Array of string options</td>
+                            </tr>
+                        </table>
+                        <pre><code>local changed = self:ListBox("Color:", 1, {"Red", "Green", "Blue"})</code></pre>
+                    </div>
+
+                    <div class="command-section" id="ColorEdit3">
+                        <h3>self:ColorEdit3(label, r, g, b)</h3>
+                        <p>Create an RGB color editor</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Color picker label</td>
+                            </tr>
+                            <tr>
+                                <td>r, g, b</td>
+                                <td>number</td>
+                                <td>Current RGB values (0.0-1.0)</td>
+                            </tr>
+                        </table>
+                        <pre><code>local r, g, b, changed = self:ColorEdit3("Color:", 1.0, 0.5, 0.0)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="ColorEdit4">
+                        <h3>self:ColorEdit4(label, r, g, b, a)</h3>
+                        <p>Create an RGBA color editor</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Color picker label</td>
+                            </tr>
+                            <tr>
+                                <td>r, g, b, a</td>
+                                <td>number</td>
+                                <td>Current RGBA values (0.0-1.0)</td>
+                            </tr>
+                        </table>
+                        <pre><code>local r, g, b, a, changed = self:ColorEdit4("Color:", 1.0, 0.5, 0.0, 1.0)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="ColorPicker3">
+                        <h3>self:ColorPicker3(label, r, g, b)</h3>
+                        <p>Create an RGB color picker</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Color picker label</td>
+                            </tr>
+                            <tr>
+                                <td>r, g, b</td>
+                                <td>number</td>
+                                <td>Current RGB values (0.0-1.0)</td>
+                            </tr>
+                        </table>
+                        <pre><code>local r, g, b, changed = self:ColorPicker3("Pick:", 1.0, 0.5, 0.0)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="SameLine">
+                        <h3>self:SameLine(offsetX)</h3>
+                        <p>Place next widget on same line</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>offsetX</td>
+                                <td>number</td>
+                                <td>Optional X offset from previous item</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:Button("A")
+                    self:SameLine()
+                    self:Button("B")
+                    self:SameLine(150)
+                    self:Button("C")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="NewLine">
+                        <h3>self:NewLine()</h3>
+                        <p>Move to next line</p>
+                        <pre><code>self:NewLine()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="BeginGroup">
+                        <h3>self:BeginGroup()</h3>
+                        <p>Start a group of widgets</p>
+                        <pre><code>self:BeginGroup()
+                    self:Text("Group Contents")
+                    self:Button("Inside Group")
+                    self:EndGroup()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="EndGroup">
+                        <h3>self:EndGroup()</h3>
+                        <p>End a group of widgets</p>
+                        <pre><code>self:BeginGroup()
+                    -- widgets here
+                    self:EndGroup()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Indent">
+                        <h3>self:Indent(width)</h3>
+                        <p>Increase indentation</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>width</td>
+                                <td>number</td>
+                                <td>Indentation amount in pixels</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:Indent(20)
+                    self:Text("Indented text")
+                    self:Unindent(20)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Unindent">
+                        <h3>self:Unindent(width)</h3>
+                        <p>Decrease indentation</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>width</td>
+                                <td>number</td>
+                                <td>Indentation amount in pixels</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:Indent(20)
+                    self:Text("Indented")
+                    self:Unindent(20)
+                    self:Text("Not indented")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Dummy">
+                        <h3>self:Dummy(width, height)</h3>
+                        <p>Create empty space</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>width</td>
+                                <td>number</td>
+                                <td>Width in pixels</td>
+                            </tr>
+                            <tr>
+                                <td>height</td>
+                                <td>number</td>
+                                <td>Height in pixels</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:Dummy(200, 10)  -- 200px wide, 10px high empty space</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Spacing">
+                        <h3>self:Spacing()</h3>
+                        <p>Add vertical spacing</p>
+                        <pre><code>self:Spacing()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="SetNextItemWidth">
+                        <h3>self:SetNextItemWidth(width)</h3>
+                        <p>Set width for next widget</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>width</td>
+                                <td>number</td>
+                                <td>Width in pixels</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:SetNextItemWidth(150)
+                    self:SliderFloat("Value:", 50, 0, 100)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="GetCursorPos">
+                        <h3>self:GetCursorPos()</h3>
+                        <p>Get current cursor position</p>
+                        <pre><code>local x, y = self:GetCursorPos()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="SetCursorPos">
+                        <h3>self:SetCursorPos(x, y)</h3>
+                        <p>Set cursor position</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>x</td>
+                                <td>number</td>
+                                <td>X position in pixels</td>
+                            </tr>
+                            <tr>
+                                <td>y</td>
+                                <td>number</td>
+                                <td>Y position in pixels</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:SetCursorPos(10, 100)</code></pre>
+                    </div>
+
+                    <div class="command-section" id="GetWindowWidth">
+                        <h3>self:GetWindowWidth()</h3>
+                        <p>Get current window width</p>
+                        <pre><code>local width = self:GetWindowWidth()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="GetWindowHeight">
+                        <h3>self:GetWindowHeight()</h3>
+                        <p>Get current window height</p>
+                        <pre><code>local height = self:GetWindowHeight()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="CollapsingHeader">
+                        <h3>self:CollapsingHeader(label, defaultOpen)</h3>
+                        <p>Create a collapsible header section</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Header text</td>
+                            </tr>
+                            <tr>
+                                <td>defaultOpen</td>
+                                <td>boolean</td>
+                                <td>Whether initially open</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:CollapsingHeader("Options", false) then
+                        self:Text("Options content here")
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="TreeNode">
+                        <h3>self:TreeNode(label)</h3>
+                        <p>Create a tree node</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Node label</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:TreeNode("Category") then
+                        self:Text("Tree content")
+                        self:TreePop()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="TreePop">
+                        <h3>self:TreePop()</h3>
+                        <p>End a tree node</p>
+                        <pre><code>if self:TreeNode("Category") then
+                        -- content
+                        self:TreePop()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="ProgressBar">
+                        <h3>self:ProgressBar(progress, width, height, overlay)</h3>
+                        <p>Create a progress bar</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>progress</td>
+                                <td>number</td>
+                                <td>Progress value (0.0-1.0)</td>
+                            </tr>
+                            <tr>
+                                <td>width</td>
+                                <td>number</td>
+                                <td>Bar width in pixels</td>
+                            </tr>
+                            <tr>
+                                <td>height</td>
+                                <td>number</td>
+                                <td>Bar height in pixels</td>
+                            </tr>
+                            <tr>
+                                <td>overlay</td>
+                                <td>string</td>
+                                <td>Optional overlay text</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:ProgressBar(0.75, 200, 0, "75%")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="PlotLines">
+                        <h3>self:PlotLines(label, values)</h3>
+                        <p>Create a line plot</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Plot label</td>
+                            </tr>
+                            <tr>
+                                <td>values</td>
+                                <td>table</td>
+                                <td>Array of number values to plot</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:PlotLines("Data", {1, 2, 3, 4, 5})</code></pre>
+                    </div>
+
+                    <div class="command-section" id="PlotHistogram">
+                        <h3>self:PlotHistogram(label, values)</h3>
+                        <p>Create a histogram plot</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Plot label</td>
+                            </tr>
+                            <tr>
+                                <td>values</td>
+                                <td>table</td>
+                                <td>Array of number values for histogram</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:PlotHistogram("Distribution", {1, 2, 2, 3, 3, 3, 4, 4, 5})</code></pre>
+                    </div>
+
+                    <div class="command-section" id="BeginTable">
+                        <h3>self:BeginTable(id, columns, width)</h3>
+                        <p>Begin a table</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>string</td>
+                                <td>Unique table identifier</td>
+                            </tr>
+                            <tr>
+                                <td>columns</td>
+                                <td>integer</td>
+                                <td>Number of columns</td>
+                            </tr>
+                            <tr>
+                                <td>width</td>
+                                <td>number</td>
+                                <td>Table width in pixels</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:BeginTable("MyTable", 3, 400) then
+                        -- table contents
+                        self:EndTable()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="EndTable">
+                        <h3>self:EndTable()</h3>
+                        <p>End a table</p>
+                        <pre><code>self:BeginTable("MyTable", 3, 400)
+                    -- content
+                    self:EndTable()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="TableNextRow">
+                        <h3>self:TableNextRow()</h3>
+                        <p>Move to next table row</p>
+                        <pre><code>self:TableNextRow()
+                    self:TableNextColumn()
+                    self:Text("Cell A1")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="TableNextColumn">
+                        <h3>self:TableNextColumn()</h3>
+                        <p>Move to next table column</p>
+                        <pre><code>self:TableNextRow()
+                    self:TableNextColumn(); self:Text("A")
+                    self:TableNextColumn(); self:Text("B")
+                    self:TableNextColumn(); self:Text("C")</code></pre>
+                    </div>
+
+                    <div class="command-section" id="BeginMenuBar">
+                        <h3>self:BeginMenuBar()</h3>
+                        <p>Begin a menu bar</p>
+                        <pre><code>if self:BeginMenuBar() then
+                        -- menu items
+                        self:EndMenuBar()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="EndMenuBar">
+                        <h3>self:EndMenuBar()</h3>
+                        <p>End a menu bar</p>
+                        <pre><code>self:BeginMenuBar()
+                    -- menus
+                    self:EndMenuBar()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="BeginMenu">
+                        <h3>self:BeginMenu(label)</h3>
+                        <p>Begin a menu</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Menu label</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:BeginMenu("File") then
+                        -- menu items
+                        self:EndMenu()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="EndMenu">
+                        <h3>self:EndMenu()</h3>
+                        <p>End a menu</p>
+                        <pre><code>self:BeginMenu("File")
+                    -- items
+                    self:EndMenu()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="MenuItem">
+                        <h3>self:MenuItem(label, shortcut)</h3>
+                        <p>Create a menu item</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td>string</td>
+                                <td>Menu item text</td>
+                            </tr>
+                            <tr>
+                                <td>shortcut</td>
+                                <td>string</td>
+                                <td>Optional shortcut text</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:MenuItem("Save", "Ctrl+S") then
+                        Log("Save menu clicked")
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="BeginTooltip">
+                        <h3>self:BeginTooltip()</h3>
+                        <p>Begin a tooltip</p>
+                        <pre><code>if self:IsItemHovered() then
+                        self:BeginTooltip()
+                        self:Text("Tooltip content")
+                        self:EndTooltip()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="EndTooltip">
+                        <h3>self:EndTooltip()</h3>
+                        <p>End a tooltip</p>
+                        <pre><code>self:BeginTooltip()
+                    -- tooltip content
+                    self:EndTooltip()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="OpenPopup">
+                        <h3>self:OpenPopup(id)</h3>
+                        <p>Open a popup</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>string</td>
+                                <td>Popup identifier</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:Button("Open") then
+                        self:OpenPopup("MyPopup")
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="BeginPopup">
+                        <h3>self:BeginPopup(id)</h3>
+                        <p>Begin a popup</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>string</td>
+                                <td>Popup identifier</td>
+                            </tr>
+                        </table>
+                        <pre><code>if self:BeginPopup("MyPopup") then
+                        self:Text("Popup content")
+                        self:EndPopup()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="EndPopup">
+                        <h3>self:EndPopup()</h3>
+                        <p>End a popup</p>
+                        <pre><code>self:BeginPopup("MyPopup")
+                    -- content
+                    self:EndPopup()</code></pre>
+                    </div>
+
+                    <div class="command-section" id="CloseCurrentPopup">
+                        <h3>self:CloseCurrentPopup()</h3>
+                        <p>Close current popup</p>
+                        <pre><code>if self:Button("Close") then
+                        self:CloseCurrentPopup()
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="IsItemHovered">
+                        <h3>self:IsItemHovered()</h3>
+                        <p>Check if last item is hovered</p>
+                        <pre><code>if self:Button("Test") then
+                        -- clicked
+                    end
+                    if self:IsItemHovered() then
+                        self:SameLine()
+                        self:Text("(Hovering)")
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="IsItemClicked">
+                        <h3>self:IsItemClicked()</h3>
+                        <p>Check if last item was clicked</p>
+                        <pre><code>if self:IsItemClicked() then
+                        Log("Item was clicked")
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="IsItemActive">
+                        <h3>self:IsItemActive()</h3>
+                        <p>Check if last item is active (being interacted with)</p>
+                        <pre><code>if self:IsItemActive() then
+                        Log("Item is being interacted with")
+                    end</code></pre>
+                    </div>
+
+                    <div class="command-section" id="Columns">
+                        <h3>self:Columns(count, id, border)</h3>
+                        <p>Create multiple columns (legacy layout)</p>
+                        <table class="param-table">
+                            <tr>
+                                <th>Property</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>count</td>
+                                <td>integer</td>
+                                <td>Number of columns</td>
+                            </tr>
+                            <tr>
+                                <td>id</td>
+                                <td>string</td>
+                                <td>Column group identifier</td>
+                            </tr>
+                            <tr>
+                                <td>border</td>
+                                <td>boolean</td>
+                                <td>Show border between columns</td>
+                            </tr>
+                        </table>
+                        <pre><code>self:Columns(3, "threecols", true)
+                    self:Text("Column 1")
+                    self:NextColumn()
+                    self:Text("Column 2")
+                    self:NextColumn()
+                    self:Text("Column 3")
+                    self:Columns(1)  -- Reset to single column</code></pre>
+                    </div>
+
+                    <div class="command-section" id="NextColumn">
+                        <h3>self:NextColumn()</h3>
+                        <p>Move to next column</p>
+                        <pre><code>self:Columns(2)
+                    self:Text("Left column")
+                    self:NextColumn()
+                    self:Text("Right column")</code></pre>
+                    </div>
+
+             </section>
 
             <section id="Dataref">
                 <h2>Dataref</h2>
@@ -1318,18 +2764,13 @@ bliz.Log("ERROR", "Hello World")
             <section id="OpenGL">
                 <h2>OpenGL</h2>
                 <div class="command-section" id="BeginClip">
-                    <h3>bliz.gl.BeginClip(id, x, y, width, height)</h3>
+                    <h3>bliz.gl.BeginClip(x, y, width, height)</h3>
                     <p>Draw custom text</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x</td>
@@ -1352,11 +2793,11 @@ bliz.Log("ERROR", "Hello World")
                             <td>The Height</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.BeginClip(id, 100, 100, 50, 50)</code></pre>
+                    <pre><code>bliz.gl.BeginClip(100, 100, 50, 50)</code></pre>
                 </div>
 
                 <div class="command-section" id="EndClip">
-                    <h3>bliz.gl.EndClip(id)</h3>
+                    <h3>bliz.gl.EndClip()</h3>
                     <p>Draw custom text</p>
                     <table class="param-table">
                         <tr>
@@ -1364,29 +2805,19 @@ bliz.Log("ERROR", "Hello World")
                             <th>Type</th>
                             <th>Description</th>
                         </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
-                        </tr>
                     </table>
-                    <pre><code>bliz.gl.EndClip(id)</code></pre>
+                    <pre><code>bliz.gl.EndClip()</code></pre>
                 </div>
 
 
                 <div class="command-section" id="DrawCustomText">
-                    <h3>bliz.gl.DrawCustomText(id, text, x, y, size, align, color, id_font)</h3>
+                    <h3>bliz.gl.DrawCustomText(text, x, y, size, align, color, id_font)</h3>
                     <p>Draw custom text</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>text</td>
@@ -1419,22 +2850,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.DrawXpText(id, "Hello World", 100, 100, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.DrawXpText("Hello World", 100, 100, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawRectangle">
-                    <h3>bliz.gl.DrawRectangle(id, x, y, width, heigh, color)</h3>
+                    <h3>bliz.gl.DrawRectangle(x, y, width, heigh, color)</h3>
                     <p>Draw a rectangle</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x</td>
@@ -1462,22 +2888,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawRectangle(id, 150, 50, 50, 50, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawRectangle(150, 50, 50, 50, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawCustomQuad">
-                    <h3>bliz.gl.DrawCustomQuad(id, x1, y1, x2, y2, x3, y3, x4, y4, color)</h3>
+                    <h3>bliz.gl.DrawCustomQuad(x1, y1, x2, y2, x3, y3, x4, y4, color)</h3>
                     <p>Draw a custom rectangle</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x1</td>
@@ -1526,22 +2947,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawCustomQuad(id, 150, 200, 40, 120, 30, 10, 40, 60, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawCustomQuad(150, 200, 40, 120, 30, 10, 40, 60, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawLine">
-                    <h3>bliz.gl.DrawLine(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <h3>bliz.gl.DrawLine(x1, y1, x2, y2, lineWidth, color)</h3>
                     <p>Draw a line</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x1</td>
@@ -1575,22 +2991,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawLine(id, 10, 50, 50, 100, 10, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawLine(10, 50, 50, 100, 10, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawWideLine">
-                    <h3>bliz.gl.DrawWideLine(id, x1, y1, x2, y2, lineWidth, segments, color)</h3>
+                    <h3>bliz.gl.DrawWideLine(x1, y1, x2, y2, lineWidth, segments, color)</h3>
                     <p>Draw a wide line</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x1</td>
@@ -1629,22 +3040,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawWideLine(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawWideLine(5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawLinePattern">
-                    <h3>bliz.gl.DrawLinePattern(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <h3>bliz.gl.DrawLinePattern(x1, y1, x2, y2, lineWidth, color)</h3>
                     <p>Draw a line Pattern</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x1</td>
@@ -1678,11 +3084,11 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawLinePattern(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawLinePattern(5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawBezierLineQ">
-                    <h3>bliz.gl.DrawBezierLineQ(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <h3>bliz.gl.DrawBezierLineQ(x1, y1, x2, y2, lineWidth, color)</h3>
                     <p>Draw a Bezier Q line</p>
                     <table class="param-table">
                         <tr>
@@ -1691,11 +3097,6 @@ bliz.Log("ERROR", "Hello World")
                             <th>Description</th>
                         </tr>
                         <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
-                        </tr>
-                        <tr>
                             <td>x1</td>
                             <td>number</td>
                             <td>The X1 position you want</td>
@@ -1727,11 +3128,11 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawBezierLineQ(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawBezierLineQ(5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawBezierLineC">
-                    <h3>bliz.gl.DrawBezierLineC(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <h3>bliz.gl.DrawBezierLineC(x1, y1, x2, y2, lineWidth, color)</h3>
                     <p>Draw a Bezier C line</p>
                     <table class="param-table">
                         <tr>
@@ -1740,11 +3141,6 @@ bliz.Log("ERROR", "Hello World")
                             <th>Description</th>
                         </tr>
                         <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
-                        </tr>
-                        <tr>
                             <td>x1</td>
                             <td>number</td>
                             <td>The X1 position you want</td>
@@ -1776,22 +3172,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawBezierLineC(id, 5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawBezierLineC(5, 5, 55, 55, 2, 1, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawArc">
-                    <h3>bliz.gl.DrawArc(id, x1, y1, x2, y2, lineWidth, color)</h3>
+                    <h3>bliz.gl.DrawArc(x1, y1, x2, y2, lineWidth, color)</h3>
                     <p>Draw a line Pattern</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x1</td>
@@ -1825,22 +3216,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawArc(id, x1, y1, x2, y2, lineWidth, color)</code></pre>
+                    <pre><code>bliz.gl.DrawArc(x1, y1, x2, y2, lineWidth, color)</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawEllipse">
-                    <h3>bliz.gl.DrawEllipse(id, x, y, rx, ry, segments, filled, lineWidth, color)</h3>
+                    <h3>bliz.gl.DrawEllipse(x, y, rx, ry, segments, filled, lineWidth, color)</h3>
                     <p>Draw a line Pattern</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x</td>
@@ -1884,11 +3270,11 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawEllipse(id, x, y, rx, ry, segments, filled, lineWidth, color)</code></pre>
+                    <pre><code>bliz.gl.DrawEllipse(x, y, rx, ry, segments, filled, lineWidth, color)</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawFilledCircle">
-                    <h3>bliz.gl.DrawFilledCircle(id, x, y, radius, segments, color)</h3>
+                    <h3>bliz.gl.DrawFilledCircle(x, y, radius, segments, color)</h3>
                     <p>Draw a a filled circle</p>
                     <table class="param-table">
                         <tr>
@@ -1897,11 +3283,6 @@ bliz.Log("ERROR", "Hello World")
                             <th>Description</th>
                         </tr>
                         <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
-                        </tr>
-                        <tr>
                             <td>x</td>
                             <td>number</td>
                             <td>The X position you want</td>
@@ -1927,11 +3308,11 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawFilledCircle(id, 50, 50, 4, 360, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawFilledCircle(50, 50, 4, 360, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawCircle">
-                    <h3>bliz.gl.DrawCircle(id, x, y, radius, segments, color)</h3>
+                    <h3>bliz.gl.DrawCircle(x, y, radius, segments, color)</h3>
                     <p>Draw a outline circle</p>
                     <table class="param-table">
                         <tr>
@@ -1940,11 +3321,6 @@ bliz.Log("ERROR", "Hello World")
                             <th>Description</th>
                         </tr>
                         <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
-                        </tr>
-                        <tr>
                             <td>x</td>
                             <td>number</td>
                             <td>The X position you want</td>
@@ -1970,22 +3346,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>A table of RBGA: {n,n,n,n}</td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawCircle(id, 100, 100, 50, 360, 5, {1,1,1,1})</code></pre>
+                    <pre><code>bliz.gl.DrawCircle(100, 100, 50, 360, 5, {1,1,1,1})</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawTexture">
-                    <h3>bliz.gl.DrawTexture(id, x, y, width, height, texID)</h3>
+                    <h3>bliz.gl.DrawTexture(x, y, width, height, texID)</h3>
                     <p>Draw a texture</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x</td>
@@ -2013,22 +3384,17 @@ bliz.Log("ERROR", "Hello World")
                             <td>You get the id from <a href="#LoadTexture">LoadTexture</a></td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawTexture(id, 50, 150, 100, 100, textureID)</code></pre>
+                    <pre><code>bliz.gl.DrawTexture(50, 150, 100, 100, textureID)</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawRotatedTexture">
-                    <h3>bliz.gl.DrawRotatedTexture(id, x, y, width, height, deg, anchorX, anchorY, texID)</h3>
+                    <h3>bliz.gl.DrawRotatedTexture(x, y, width, height, deg, anchorX, anchorY, texID)</h3>
                     <p>Draw a texture</p>
                     <table class="param-table">
                         <tr>
                             <th>Property</th>
                             <th>Type</th>
                             <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>id</td>
-                            <td>number</td>
-                            <td>You get this from the function Draw</td>
                         </tr>
                         <tr>
                             <td>x</td>
@@ -2075,7 +3441,7 @@ bliz.Log("ERROR", "Hello World")
                             <td>You get the id from <a href="#LoadTexture">LoadTexture</a></td>
                         </tr>
                     </table>
-                    <pre><code>bliz.gl.DrawRotatedTexture(id, 50, 150, 100, 100, 90, 50, 50, textureID)</code></pre>
+                    <pre><code>bliz.gl.DrawRotatedTexture(50, 150, 100, 100, 90, 50, 50, textureID)</code></pre>
                 </div>
 
                 <div class="command-section" id="LoadTexture">
@@ -2213,15 +3579,14 @@ bliz.Log("ERROR", "Hello World")
                 </div>
 
                 <div class="command-section" id="SetBlendMode">
-                    <h3>bliz.gl.SetBlendMode(id, src, dst)</h3>
+                    <h3>bliz.gl.SetBlendMode(src, dst)</h3>
                     <p>Enable blending with specified source and destination factors.</p>
                     <table class="param-table">
                         <tr><th>Property</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>id</td><td>integer</td><td>Window or render target ID</td></tr>
                         <tr><td>src</td><td>integer</td><td>Source blend factor</td></tr>
                         <tr><td>dst</td><td>integer</td><td>Destination blend factor</td></tr>
                     </table>
-                    <pre><code>bliz.gl.SetBlendMode(id, src, dst)</code></pre>
+                    <pre><code>bliz.gl.SetBlendMode(src, dst)</code></pre>
                 </div>
 
                 <div class="command-section" id="PushMatrix">
@@ -2274,18 +3639,17 @@ bliz.Log("ERROR", "Hello World")
                 </div>
 
                 <div class="command-section" id="BeginRenderTarget">
-                    <h3>bliz.gl.BeginRenderTarget(winID, x, y, width, height, argHandle)</h3>
+                    <h3>bliz.gl.BeginRenderTarget(x, y, width, height, argHandle)</h3>
                     <p>Begin rendering to a render target texture.</p>
                     <table class="param-table">
                         <tr><th>Property</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>winID</td><td>integer</td><td>Window ID</td></tr>
                         <tr><td>x</td><td>integer</td><td>Render target X offset</td></tr>
                         <tr><td>y</td><td>integer</td><td>Render target Y offset</td></tr>
                         <tr><td>width</td><td>integer</td><td>Width of the target</td></tr>
                         <tr><td>height</td><td>integer</td><td>Height of the target</td></tr>
                         <tr><td>argHandle</td><td>integer</td><td>Optional handle for existing render target</td></tr>
                     </table>
-                    <pre><code>bliz.gl.BeginRenderTarget(winID, x, y, width, height, argHandle)</code></pre>
+                    <pre><code>bliz.gl.BeginRenderTarget(x, y, width, height, argHandle)</code></pre>
                 </div>
 
                 <div class="command-section" id="EndRenderTarget">
@@ -2305,11 +3669,10 @@ bliz.Log("ERROR", "Hello World")
                 </div>
 
                 <div class="command-section" id="DrawVerticalGradient">
-                    <h3>bliz.gl.DrawVerticalGradient(winID, x, y, width, height, topColor, bottomColor)</h3>
+                    <h3>bliz.gl.DrawVerticalGradient(x, y, width, height, topColor, bottomColor)</h3>
                     <p>Draw a vertical gradient in a window.</p>
                     <table class="param-table">
                         <tr><th>Property</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>winID</td><td>integer</td><td>Window ID</td></tr>
                         <tr><td>x</td><td>number</td><td>X position</td></tr>
                         <tr><td>y</td><td>number</td><td>Y position</td></tr>
                         <tr><td>width</td><td>number</td><td>Width of gradient</td></tr>
@@ -2317,15 +3680,14 @@ bliz.Log("ERROR", "Hello World")
                         <tr><td>topColor</td><td>table</td><td>RGBA color at top</td></tr>
                         <tr><td>bottomColor</td><td>table</td><td>RGBA color at bottom</td></tr>
                     </table>
-                    <pre><code>bliz.gl.DrawVerticalGradient(winID, x, y, width, height, topColor, bottomColor)</code></pre>
+                    <pre><code>bliz.gl.DrawVerticalGradient(x, y, width, height, topColor, bottomColor)</code></pre>
                 </div>
 
                 <div class="command-section" id="DrawHorizontalGradient">
-                    <h3>bliz.gl.DrawHorizontalGradient(winID, x, y, width, height, leftColor, rightColor)</h3>
+                    <h3>bliz.gl.DrawHorizontalGradient(x, y, width, height, leftColor, rightColor)</h3>
                     <p>Draw a horizontal gradient in a window.</p>
                     <table class="param-table">
                         <tr><th>Property</th><th>Type</th><th>Description</th></tr>
-                        <tr><td>winID</td><td>integer</td><td>Window ID</td></tr>
                         <tr><td>x</td><td>number</td><td>X position</td></tr>
                         <tr><td>y</td><td>number</td><td>Y position</td></tr>
                         <tr><td>width</td><td>number</td><td>Width of gradient</td></tr>
@@ -2333,7 +3695,7 @@ bliz.Log("ERROR", "Hello World")
                         <tr><td>leftColor</td><td>table</td><td>RGBA color at left</td></tr>
                         <tr><td>rightColor</td><td>table</td><td>RGBA color at right</td></tr>
                     </table>
-                    <pre><code>bliz.gl.DrawHorizontalGradient(winID, x, y, width, height, leftColor, rightColor)</code></pre>
+                    <pre><code>bliz.gl.DrawHorizontalGradient(x, y, width, height, leftColor, rightColor)</code></pre>
                 </div>
 
                 <div class="command-section" id="LoadShader">
@@ -4073,6 +5435,84 @@ is_wet, velocityX, velocityY, velocityZ = bliz.ProbeTerrainXYZ(10, 20, 30)</code
                     </table>
                     <pre><code>bliz.createThread(function() ... end)</code></pre>
                 </div>
+
+                <div class="command-section" id="stopThread">
+                    <h3>bliz.stopThread(threadID)</h3>
+                    <p>Create a new thread</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>threadID</td>
+                            <td>int</td>
+                            <td>The ID of the thread</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.stopThread(threadID)</code></pre>
+                </div>
+
+                <div class="command-section" id="pauseThread">
+                    <h3>bliz.pauseThread(threadID, pause)</h3>
+                    <p>Create a new thread</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>threadID</td>
+                            <td>int</td>
+                            <td>The ID of the thread</td>
+                        </tr>
+                        <tr>
+                            <td>pause</td>
+                            <td>bool</td>
+                            <td>Set the status of the thread</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.pauseThread(threadID, true)</code></pre>
+                </div>
+
+                <div class="command-section" id="isThreadAlive">
+                    <h3>bliz.isThreadAlive(threadID)</h3>
+                    <p>Create a new thread</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>threadID</td>
+                            <td>int</td>
+                            <td>The ID of the thread</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.isThreadAlive(threadID)</code></pre>
+                </div>
+
+                <div class="command-section" id="resumeThread">
+                    <h3>bliz.resumeThread(threadID)</h3>
+                    <p>Create a new thread</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>threadID</td>
+                            <td>int</td>
+                            <td>The ID of the thread</td>
+                        </tr>
+                    </table>
+                    <pre><code>local suc = bliz.resumeThread(threadID)</code></pre>
+                </div>
+                
             </section>
         </section>
 
