@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #1e293b;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .back-btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .back-btn:hover {
+            background-color: #2563eb;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 30px 0;
+        }
+        
+        .tutorial-header {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tutorial-title {
+            color: #1e293b;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .tutorial-meta {
+            display: flex;
+            gap: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* Tutorial Content */
+        .tutorial-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .tutorial-image {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tutorial-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .image-caption {
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .description {
+            margin-bottom: 30px;
+        }
+        
+        .description p {
+            margin-bottom: 15px;
+        }
+        
+        /* Code Example */
+        .code-container {
+            background-color: #0d1117;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .code-header {
+            background-color: #161b22;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #c9d1d9;
+        }
+        
+        .code-title {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .copy-btn {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #2ea043;
+        }
+        
+        .copy-btn.copied {
+            background-color: #1f6feb;
+        }
+        
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Download Section */
+        .download-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .download-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .download-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #e0f2fe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .download-icon i {
+            font-size: 2.5rem;
+            color: #0369a1;
+        }
+        
+        .download-info h3 {
+            color: #1e293b;
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .download-info p {
+            color: #64748b;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .download-btn {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #059669;
+        }
+        
+        .file-details {
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        
+        .file-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .file-details li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .file-details i {
+            color: #3b82f6;
+        }
+        
+        /* Navigation */
+        .tutorial-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: #f8fafc;
+            border-color: #3b82f6;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            padding: 30px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-logo i {
+            color: #3b82f6;
+            font-size: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3b82f6;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .download-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tutorial-navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>Tutorial Forum</h1>
+            </a>
+            <button class="back-btn" id="backBtn">
+                <i class="fas fa-arrow-left"></i> Back to Tutorials
+            </button>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="tutorial-header">
+            <h1 class="tutorial-title" id="tutorialTitle">Drawing on Panels</h1>
+            <div class="tutorial-meta">
+                <div class="meta-item">
+                    <i class="far fa-calendar"></i>
+                    <span id="tutorialDate">2026-01-21-01-21</span>
+                </div>
+                <div class="meta-item">
+                    <i class="far fa-clock"></i>
+                    <span>5 min read</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <span id="tutorialCategory">Blizlua Drawing</span>
+                </div>
+            </div>
+            <div class="category-badge" id="tutorialCategoryBadge">Blizlua Drawing</div>
+        </div>
+        
+        <div class="tutorial-content">
+            <div class="description">
+                <h2 class="section-title">Overview</h2>
+                <p>This tutorial will guide you through the process of drawing directly on aircraft panels in X-Plane using Blizlua. You'll learn how to render basic elements on cockpit displays and integrate them into the 3D cockpit environment.</p>
+                <p>By the end of this tutorial, you'll have a solid understanding of how X-Plane panel rendering works and how to use Blizlua to create interactive and dynamic cockpit graphics.</p>
+            </div>
+            
+            <div class="tutorial-image">
+                <img src="https://raw.githubusercontent.com/DevolperRL/Blizlua_Website/refs/heads/main/tutorials/Draw3d.png" alt="Windows Drawing Application Example" id="tutorialImage">
+                <!--div class="image-caption" id="imageCaption">Example of a drawing application created with Blizlua</div-->
+            </div>
+            
+            <div class="description">
+                <h2 class="section-title">Example Code</h2>
+                <p>Here's a basic example in Blizlua:</p>
+                
+                <div class="code-container">
+                    <div class="code-header">
+                        <div class="code-title">main.lua</div>
+                        <button class="copy-btn" id="copyCodeBtn">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <pre><code class="language-lua">--We create here a draw function
+function draw3d(phase, isBefore, refcon)
+    --Let's not continue if it's the wrong phase
+    if phase ~= XPLM_PHASE_GAUGES then
+        return 1
+    end
+
+    --Since we use the texture panel we have different sizes
+    --so we are gonna try to draw a 1000x1000 size rectangle
+    bliz.gl.DrawRectangle(1000, 1000, 1000, 1000, 1, 1, {1,1,1,1})
+
+    return 1
+end
+
+--Register a  draw callback
+local callbackId = bliz.RegisterDrawCallback(draw3d, XPLM_PHASE_GAUGES, true)
+</code></pre>
+                </div>
+                
+                <p> </p>
+            </div>
+        </div>
+        
+        <div class="tutorial-navigation">
+            <a href="drawing-3d.html" class="nav-btn" id="prevBtn">
+                <i class="fas fa-arrow-left"></i>
+                <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Previous Tutorial</div>
+                    <div>Drawing 3D Objects</div>
+                </div>
+            </a>
+            <a href="drawing-basic.html" class="nav-btn" id="nextBtn">
+                <div style="text-align: right;">
+                    <div style="font-size: 0.85rem; color: #64748b;">Next Tutorial</div>
+                    <div>Basic Shapes and Lines</div>
+                </div>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-book-open"></i>
+                    <div>Tutorial Forum</div>
+                </div>
+                <div class="footer-links">
+                    <a href="https://devolperrl.github.io/Blizlua_Website/">Home</a>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Tutorial Forum. All tutorials and code examples are provided for educational purposes.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+        
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const tutorialFile = urlParams.get('file') || 'drawing-windows.html';
+        const tutorialTitle = urlParams.get('title') || 'Drawing on Windows';
+        
+        // Tutorial data - you can expand this with more tutorials
+        const tutorials = {
+            /*'drawing-windows.html': {
+                title: 'Drawing on Windows',
+                category: 'Blizlua Drawing',
+                date: '2026-01-21-10-15',
+                image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                //imageCaption: 'Example of a drawing application created with Blizlua',
+                fileName: 'drawing-windows-project.zip',
+                fileSize: '2.4 MB',
+                fileDate: 'October 15, 2026-01-21',
+                downloadCount: '1,247',
+                nextTutorial: 'drawing-3d.html',
+                nextTitle: 'Drawing 3D Objects',
+                prevTutorial: 'drawing-basics.html',
+                prevTitle: 'Basic Shapes and Lines'
+            },*/
+            /*'drawing-3d.html': {
+                title: 'Drawing 3D Objects',
+                category: 'Blizlua Drawing',
+                date: '2026-01-21-10-12',
+                image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                imageCaption: '3D rendering example with Blizlua',
+                fileName: '3d-drawing-project.zip',
+                fileSize: '3.1 MB',
+                fileDate: 'October 12, 2026-01-21',
+                downloadCount: '892',
+                nextTutorial: 'drawing-basics.html',
+                nextTitle: 'Basic Shapes and Lines',
+                prevTutorial: 'drawing-windows.html',
+                prevTitle: 'Drawing on Windows'
+            },
+            'imgui-basics.html': {
+                title: 'Getting Started with ImGui',
+                category: 'ImGui Tutorials',
+                date: '2026-01-21-10-14',
+                image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                imageCaption: 'ImGui interface example',
+                fileName: 'imgui-basics-project.zip',
+                fileSize: '1.8 MB',
+                fileDate: 'October 14, 2026-01-21',
+                downloadCount: '1,543',
+                nextTutorial: 'imgui-widgets.html',
+                nextTitle: 'Creating Custom Widgets',
+                prevTutorial: null,
+                prevTitle: null
+            }*/
+        };
+        
+        // Load tutorial data based on the file parameter
+        function loadTutorialData() {
+            const tutorial = tutorials[tutorialFile] || tutorials['drawing-windows.html'];
+            
+            // Update page title
+            document.title = `${tutorial.title} - Tutorial Forum`;
+            
+            // Update tutorial information
+            document.getElementById('tutorialTitle').textContent = tutorial.title;
+            document.getElementById('tutorialDate').textContent = tutorial.date;
+            document.getElementById('tutorialCategory').textContent = tutorial.category;
+            document.getElementById('tutorialCategoryBadge').textContent = tutorial.category;
+            
+            // Update image
+            document.getElementById('tutorialImage').src = tutorial.image;
+            document.getElementById('tutorialImage').alt = tutorial.title;
+            document.getElementById('imageCaption').textContent = tutorial.imageCaption;
+            
+            // Update download section
+            document.getElementById('downloadTitle').textContent = `Complete ${tutorial.title} Project`;
+            document.getElementById('fileName').textContent = tutorial.fileName;
+            document.getElementById('fileSize').textContent = tutorial.fileSize;
+            document.getElementById('fileDate').textContent = tutorial.fileDate;
+            //document.getElementById('downloadCount').textContent = tutorial.downloadCount;
+            
+            // Update navigation buttons
+            if (tutorial.prevTutorial) {
+                document.getElementById('prevBtn').href = `tutorial.html?file=${tutorial.prevTutorial}&title=${encodeURIComponent(tutorial.prevTitle)}`;
+                document.getElementById('prevBtn').querySelector('div > div:last-child').textContent = tutorial.prevTitle;
+            } else {
+                document.getElementById('prevBtn').style.display = 'none';
+            }
+            
+            if (tutorial.nextTutorial) {
+                document.getElementById('nextBtn').href = `tutorial.html?file=${tutorial.nextTutorial}&title=${encodeURIComponent(tutorial.nextTitle)}`;
+                document.getElementById('nextBtn').querySelector('div > div:last-child').textContent = tutorial.nextTitle;
+            } else {
+                document.getElementById('nextBtn').style.display = 'none';
+            }
+            
+            // You can also update the code examples based on the tutorial
+            updateCodeExamples(tutorialFile);
+        }
+        
+        // Function to update code examples based on tutorial
+        function updateCodeExamples(tutorialFile) {
+            // You can add custom code examples for each tutorial here
+            const codeExamples = {
+                'drawing-windows.html': `-- Initialize Blizlua
+local window = require("blizlua.window")
+local graphics = require("blizlua.graphics")
+
+-- Create a new window
+local win = window.create("Drawing Demo", 800, 600)
+
+-- Main application loop
+while win:isOpen() do
+    -- Clear the window with white color
+    graphics.clear(win, 1.0, 1.0, 1.0, 1.0)
+    
+    -- Draw a blue rectangle
+    graphics.setColor(0.2, 0.4, 0.8, 1.0)
+    graphics.rectangle("fill", 100, 100, 200, 150)
+    
+    -- Draw a red circle
+    graphics.setColor(0.8, 0.2, 0.2, 1.0)
+    graphics.circle("fill", 400, 300, 50)
+    
+    -- Update the window
+    win:update()
+    
+    -- Handle events
+    local event = win:pollEvent()
+    if event and event.type == "quit" then
+        win:close()
+    end
+end
+
+print("Application finished successfully!")`,
+                
+                'imgui-basics.html': `-- ImGui basic example
+local imgui = require("blizlua.imgui")
+
+-- Initialize ImGui
+imgui.init()
+
+-- Create a window
+function createWindow()
+    imgui.begin("My First ImGui Window")
+    
+    -- Add a text widget
+    imgui.text("Hello, ImGui!")
+    
+    -- Add a button
+    if imgui.button("Click Me") then
+        print("Button clicked!")
+    end
+    
+    -- Add a slider
+    local value = 0.5
+    imgui.sliderFloat("Slider", value, 0.0, 1.0)
+    
+    imgui.end()
+end
+
+-- Main loop
+while true do
+    createWindow()
+    imgui.render()
+end`
+            };
+            
+            // Update code block if we have a custom example
+            if (codeExamples[tutorialFile]) {
+                const codeBlock = document.querySelector('pre code');
+                codeBlock.textContent = codeExamples[tutorialFile];
+                hljs.highlightElement(codeBlock);
+            }
+        }
+        
+        // Copy code functionality
+        document.getElementById('copyCodeBtn').addEventListener('click', function() {
+            const code = document.querySelector('pre code').textContent;
+            copyToClipboard(code);
+            showCopyFeedback(this);
+        });
+        
+        /*document.getElementById('copyStructureBtn').addEventListener('click', function() {
+            const structureCode = document.querySelectorAll('pre code')[0].textContent;
+            copyToClipboard(structureCode);
+            showCopyFeedback(this);
+        });*/
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                console.log('Code copied to clipboard');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Fallback method
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            });
+        }
+        
+        function showCopyFeedback(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            button.classList.add('copied');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('copied');
+            }, 2000);
+        }
+        
+        // Download button functionality
+        /*document.getElementById('downloadBtn').addEventListener('click', function() {
+            const tutorial = tutorials[tutorialFile] || tutorials['drawing-windows.html'];
+            
+            // Simulate download
+            alert(`Downloading: ${tutorial.fileName}\n\nIn a real implementation, this would download the file from your server.\n\nYou can implement this by linking to an actual file:\n\n<a href="downloads/${tutorial.fileName}" download>Download</a>`);
+            
+            // For demonstration, we'll update the download count
+            let currentCount = parseInt(tutorial.downloadCount.replace(',', ''));
+            currentCount++;
+            document.getElementById('downloadCount').textContent = currentCount.toLocaleString();
+        });*/
+        
+        document.getElementById('backBtn').addEventListener('click', function() {
+            window.location.href = "https://devolperrl.github.io/Blizlua_Website/forum.html";
+        });
+        
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTutorialData();
+        });
+    </script>
+</body>
+</html>
