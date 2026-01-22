@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlizLua Premium - Professional X-Plane Development</title>
+    <style>
+        :root {
+            --premium-gold: #ffd700;
+            --premium-dark: #1a1a2e;
+            --premium-primary: #0c4a6e;
+            --premium-secondary: #0369a1;
+            --premium-accent: #10b981;
+            --premium-light: #f0f9ff;
+            --premium-card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 100%);
+            color: #f8fafc;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .premium-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            padding: 0.25rem 1rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            border-bottom: 2px solid var(--premium-gold);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #f8fafc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--premium-gold);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--premium-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--premium-primary), #1a1a2e);
+            color: white;
+            padding: 12rem 2rem 6rem;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M20,20 L80,20 L80,80 L20,80 Z" stroke="%23ffd700" stroke-width="0.5" fill="none" opacity="0.1"/><path d="M30,30 L70,30 L70,70 L30,70 Z" stroke="%23ffd700" stroke-width="0.5" fill="none" opacity="0.1"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: slideUp 1s ease;
+            position: relative;
+        }
+
+        .hero h1:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: var(--premium-gold);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .features {
+            max-width: 1200px;
+            margin: -4rem auto 4rem;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--premium-card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--premium-gold);
+        }
+
+        .feature-card.premium-feature {
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: linear-gradient(145deg, rgba(12, 74, 110, 0.2), rgba(26, 26, 46, 0.3));
+        }
+
+        .feature-card.premium-feature:before {
+            width: 6px;
+            background: linear-gradient(to bottom, #ffd700, #ffed4e);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            border-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .pricing-section {
+            background: linear-gradient(45deg, #0c4a6e, #1a1a2e);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+            position: relative;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--premium-gold);
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .pricing-card.popular .pricing-badge {
+            background: var(--premium-gold);
+            color: var(--premium-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--premium-gold);
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-features li:before {
+            content: '✓';
+            color: var(--premium-gold);
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        .purchase-btn {
+            background: linear-gradient(45deg, var(--premium-gold), #ffed4e);
+            color: #1a1a2e;
+            padding: 1rem 2.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            position: relative;  /* Add this */
+            z-index: 10;        /* Add this */
+        }
+
+        .purchase-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .requirements {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        footer {
+            background-color: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin-top: 6rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .docs-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .quickstart-guide {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .encryption-feature {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(12, 74, 110, 0.2);
+            border-radius: 1rem;
+            border-left: 4px solid var(--premium-gold);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 8rem 1rem 4rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+            
+            .encryption-feature {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1 style="color: var(--premium-gold);">BlizLua<span class="premium-badge">PREMIUM</span></h1>
+            <div class="nav-links">
+                <a href="https://devolperrl.github.io/Blizlua_Website/">Home</a>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#about">Commercial License</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>Professional X-Plane Development</h1>
+        <p>Advanced Lua scripting platform for commercial aircraft, payware projects, and professional simulation development</p>
+        <a href="#pricing" class="purchase-btn pulse-animation" style="margin-top: 2rem; width: auto; display: inline-block;">
+            Get Premium License
+        </a>
+    </section>
+
+    <section class="features" id="features">
+        <div class="feature-card premium-feature">
+            <h3>Advanced Encryption System</h3>
+            <p>Protect your intellectual property with AES-256 encryption for scripts and assets</p>
+        </div>
+        <div class="feature-card premium-feature">
+            <h3>Commercial Licensing</h3>
+            <p>Full rights to distribute your creations as payware or commercial products</p>
+        </div>
+        <div class="feature-card">
+            <h3>Priority Support</h3>
+            <p>Direct access to our development team with 48-hour response guarantee</p>
+        </div>
+        <div class="feature-card">
+            <h3>Extended API</h3>
+            <p>Exclusive access to advanced X-Plane SDK functions not available in standard version</p>
+        </div>
+        <div class="feature-card premium-feature">
+            <h3>DRM & Activation</h3>
+            <p>Built-in digital rights management with license key activation system</p>
+        </div>
+        <div class="feature-card">
+            <h3>Performance Analytics</h3>
+            <p>Advanced profiling tools to optimize script performance in commercial products</p>
+        </div>
+    </section>
+
+    <section class="pricing-section" id="pricing">
+        <h2>Choose Your Premium License</h2>
+        <p>Select the plan that fits your development needs</p>
+        
+        <div class="pricing-container">
+        <div class="pricing-card">
+            <h3>SOLO DEVELOPER</h3>
+            <div class="price">$5<span> lifetime</span></div>
+            <p class="price-subtitle">Perfect for individual developers</p>
+            <ul class="pricing-features">
+                <li><strong>Lifetime license for 1 project</strong></li>
+                <li>1 developer seat</li>
+                <li>AES-256 script encryption</li>
+                <li>Basic DRM protection</li>
+                <li>Commercial Solo Developer distribution rights</li>
+                <li>Standard API access</li>
+                <li>Community support</li>
+            </ul>
+            <button class="purchase-btn">Purchase Solo License</button>
+        </div>
+        
+        <div class="pricing-card popular">
+            <div class="pricing-badge">BEST VALUE</div>
+            <h3>TEAM LICENSE</h3>
+            <div class="price">$15<span> lifetime</span></div>
+            <p class="price-subtitle">For small to medium teams</p>
+            <ul class="pricing-features">
+                <li><strong>Lifetime license for 1 project</strong></li>
+                <li>Advanced AES-256 encryption</li>
+                <li>Full DRM with activation system</li>
+                <li>Priority support (48-hour response)</li>
+                <li>Collaboration features</li>
+                <li>Commercial Team distribution rights</li>
+            </ul>
+            <button class="purchase-btn">Purchase Team License</button>
+        </div>
+        
+        <div class="pricing-card">
+            <h3>STUDIO ENTERPRISE</h3>
+            <div class="price">Custom<span> lifetime</span></div>
+            <p class="price-subtitle">For large studios & multiple projects</p>
+            <ul class="pricing-features">
+                <li><strong>Custom licensing terms</strong></li>
+                <li>Custom encryption solutions</li>
+                <li>Dedicated support engineer</li>
+                <li>Custom API development</li>
+                <li>White-label branding</li>
+                <li>Lifetime updates</li>
+            </ul>
+            <button class="purchase-btn">Contact for Custom Quote</button>
+        </div>
+    </div>
+
+        <div class="requirements">
+            <h3>System Requirements</h3>
+            <ul>
+                <li>X-Plane 11 or 12</li>
+                <li>Windows 10+ (MacOS/Linux support Q3 2025)</li>
+                <li>8GB RAM recommended</li>
+                <li>100MB available storage</li>
+                <li>Internet connection for activation</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer id="about">
+        <p>©2025 BlizLua Premium. Professional development platform.</p>
+        <p>Not affiliated with Laminar Research. Lua is a registered trademark of PUC-Rio</p>
+        <p style="margin-top: 1rem; color: #cbd5e1; font-size: 0.9rem;">All premium licenses include 30-day money-back guarantee</p>
+    </footer>
+
+    <script>
+        // Enhanced smooth scrolling with offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const offset = 80;
+                
+                window.scrollTo({
+                    top: target.offsetTop - offset,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Feature card animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 46, 0.98)';
+                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.4)';
+            } else {
+                header.style.background = 'rgba(26, 26, 46, 0.95)';
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+            }
+        });
+
+        // Purchase button interactions
+        document.querySelectorAll('.purchase-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // In a real implementation, this would redirect to a checkout page
+                //alert('Thank you for your interest in BlizLua Premium! In a real implementation, this would redirect to our secure checkout page.');
+            });
+        });
+    </script>
+</body>
+</html>
