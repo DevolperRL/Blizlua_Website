@@ -214,6 +214,7 @@
                 <a href="#Const" class="active">Const</a>
                 <a href="#Functions">Functions</a>
                 <a href="#Debug">Debug</a>
+                <a href="#Components">Components</a>
                 <a href="#Dataref">Dataref</a>
                 <a href="#Command">Command</a>
                 <a href="#Xplane-Def">Xplane-Def</a>
@@ -230,6 +231,7 @@
                 <a href="#Camera">Camera</a>
                 <a href="#Timers">Timers</a>
                 <a href="#Math">Math</a>
+                <a href="#CEF">CEF</a>
                 <a href="#Utils">Utils</a>
                 <a href="#troubleshooting">Troubleshooting</a>
             </nav>
@@ -2327,6 +2329,148 @@ bliz.Log("ERROR", "Hello World")
                     </div>
 
              </section>
+
+             <section id="Components">
+                <h2>Components</h2>
+                <div class="command-section" id="AddSearchPath">
+                    <h3>bliz.AddSearchPath(path)</h3>
+                    <p>Add a search path for finding datarefs</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>path</td>
+                            <td>string</td>
+                            <td>Path to add to the search list</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.AddSearchPath(GetPluginPath() .. "data/scripts/modules/")</code></pre>
+                </div>
+
+                <div class="command-section" id="AddComponent">
+                    <h3>bliz.AddComponent(win, script, component)</h3>
+                    <p>Add a component to a window</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>win</td>
+                            <td>table</td>
+                            <td>The window to add the component to</td>
+                        </tr>
+                        <tr>
+                            <td>script</td>
+                            <td>string</td>
+                            <td>The script to use for the component</td>
+                        </tr>
+                        <tr>
+                            <td>component</td>
+                            <td>table</td>
+                            <td>The component to add</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.AddComponent(win, "button", { 
+    position = {50, 50, 50, 50}, 
+    clip = true
+})</code></pre>
+                </div>
+
+                <div class="command-section" id="DestroyComponent">
+                    <h3>bliz.DestroyComponent(win, component)</h3>
+                    <p>Destroy a component</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>win</td>
+                            <td>table</td>
+                            <td>The window the component belongs to</td>
+                        <tr>
+                            <td>component</td>
+                            <td>table</td>
+                            <td>The component to destroy</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.DestroyComponent(win, component)</code></pre>
+                </div>
+
+                <div class="command-section" id="AddPanelComponent">
+                    <h3>bliz.AddPanelComponent(script, props)</h3>
+                    <p>Add a panel component to the UI</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>script</td>
+                            <td>string</td>
+                            <td>The script to use for the component</td>
+                        </tr>
+                        <tr>
+                            <td>props</td>
+                            <td>table</td>
+                            <td>Properties to pass to the component</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.AddPanelComponent("button", {
+    id = "alt1",
+    position = {30, 540, 635, 390}
+})</code></pre>
+                </div>
+
+                <div class="command-section" id="DestroyPanelComponent">
+                    <h3>bliz.DestroyPanelComponent(id)</h3>
+                    <p>Destroy a panel component by its identifier</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>string</td>
+                            <td>The identifier of the panel component to destroy</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.DestroyPanelComponent("my_panel_id")</code></pre>
+                </div>
+
+                <div class="command-section" id="SetPanelSize">
+                    <h3>bliz.SetPanelSize(width, height)</h3>
+                    <p>Set the size of the panel</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>integer</td>
+                            <td>The width of the panel in pixels</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>integer</td>
+                            <td>The height of the panel in pixels</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.SetPanelSize(800, 600)</code></pre>
+                </div>
+            </section> 
+        </section>
 
             <section id="Dataref">
                 <h2>Dataref</h2>
@@ -5039,6 +5183,273 @@ is_wet, velocityX, velocityY, velocityZ = bliz.ProbeTerrainXYZ(10, 20, 30)</code
 
                 </section>
 
+                <section id="CEF">
+                    <h2>CEF</h2>
+                    <div class="command-section" id="InitializeCEF">
+                    <h3>bliz.cef.InitializeCEF(x, y, width, height)</h3>
+                    <p>Initialize the CEF browser at the specified position and size</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>X coordinate of the browser</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>Y coordinate of the browser</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>number</td>
+                            <td>Width of the browser</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>number</td>
+                            <td>Height of the browser</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.InitializeCEF(0, 0, 1024, 768)</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawCEF">
+                    <h3>bliz.cef.DrawCEF()</h3>
+                    <p>Draw the CEF browser</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.DrawCEF()</code></pre>
+                </div>
+
+                <div class="command-section" id="DrawCEFPanel">
+                    <h3>bliz.cef.DrawCEFPanel()</h3>
+                    <p>Draw the CEF panel</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.DrawCEFPanel()</code></pre>
+                </div>
+
+                <div class="command-section" id="GoBack">
+                    <h3>bliz.cef.GoBack()</h3>
+                    <p>Navigate back in browser history</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.GoBack()</code></pre>
+                </div>
+
+                <div class="command-section" id="GoForward">
+                    <h3>bliz.cef.GoForward()</h3>
+                    <p>Navigate forward in browser history</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.GoForward()</code></pre>
+                </div>
+
+                <div class="command-section" id="Reload">
+                    <h3>bliz.cef.Reload()</h3>
+                    <p>Reload the current page</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.Reload()</code></pre>
+                </div>
+
+                <div class="command-section" id="ExecuteJavaScript">
+                    <h3>bliz.cef.ExecuteJavaScript(code)</h3>
+                    <p>Execute JavaScript code in the browser</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>code</td>
+                            <td>string</td>
+                            <td>JavaScript code to execute</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.ExecuteJavaScript("document.title = 'Hello World';")</code></pre>
+                </div>
+
+                <div class="command-section" id="DestroyCEF">
+                    <h3>bliz.cef.DestroyCEF()</h3>
+                    <p>Destroy the CEF browser and free resources</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.DestroyCEF()</code></pre>
+                </div>
+
+                <div class="command-section" id="LoadURL">
+                    <h3>bliz.cef.LoadURL(url)</h3>
+                    <p>Load a URL in the browser</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>url</td>
+                            <td>string</td>
+                            <td>The URL to load</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.LoadURL("https://www.example.com")</code></pre>
+                </div>
+
+                <div class="command-section" id="MouseClickCEF">
+                    <h3>bliz.cef.MouseClickCEF(x, y, status)</h3>
+                    <p>Simulate a mouse click at the specified coordinates</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>X coordinate of the click</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>Y coordinate of the click</td>
+                        </tr>
+                        <tr>
+                            <td>status</td>
+                            <td>integer</td>
+                            <td>Click status</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.MouseClickCEF(localX, localY, phase)</code></pre>
+                </div>
+
+                <div class="command-section" id="MouseWheelCEF">
+                    <h3>bliz.cef.MouseWheelCEF(x, y, status)</h3>
+                    <p>Simulate mouse wheel scrolling at the specified coordinates</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>X coordinate of the mouse</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>Y coordinate of the mouse</td>
+                        </tr>
+                        <tr>
+                            <td>status</td>
+                            <td>integer</td>
+                            <td>Wheel delta (positive = up, negative = down)</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.MouseWheelCEF(localX, localY, wheelDelta)</code></pre>
+                </div>
+
+                <div class="command-section" id="MouseCursorCEF">
+                    <h3>bliz.cef.MouseCursorCEF(x, y)</h3>
+                    <p>Simulate mouse cursor movement at the specified coordinates</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>number</td>
+                            <td>X coordinate of the mouse</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>number</td>
+                            <td>Y coordinate of the mouse</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.MouseCursorCEF(localX, localY)</code></pre>
+                </div>
+
+
+                <div class="command-section" id="SetBrowserWindow">
+                    <h3>bliz.cef.SetBrowserWindow(x, y)</h3>
+                    <p>Set the browser window by ID</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>integer</td>
+                            <td>The browser window identifier</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.SetBrowserWindow(win.id)</code></pre>
+                </div>
+
+                <div class="command-section" id="SetWindowVisibleCEF">
+                    <h3>bliz.cef.SetWindowVisibleCEF(visible)</h3>
+                    <p>Set the visibility of a browser window by ID</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>visible</td>
+                            <td>boolean</td>
+                            <td>Whether the window should be visible</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.cef.SetWindowVisibleCEF(true)</code></pre>
+                </div>
+
+            </section>
+
             <section id="Utils">
                 <h2>Utils</h2>
 
@@ -5556,6 +5967,33 @@ end</code></pre>
                         </tr>
                     </table>
                     <pre><code>bliz.CreateNotification("Warning", "Reload the plane!", 5)</code></pre>
+                </div>
+
+
+                <div class="command-section" id="TakeKeyboardFocus">
+                    <h3>bliz.TakeKeyboardFocus(id)</h3>
+                    <p>Takes keyboard focus for the specified panel</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>int</td>
+                            <td>The ID of the panel</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.TakeKeyboardFocus(win.id)</code></pre>
+                </div>
+
+                <div class="command-section" id="Active3dCursor">
+                    <h3>bliz.Active3dCursor()</h3>
+                    <p>Activates the 3D cursor</p>
+                    <table class="param-table">
+                    </table>
+                    <pre><code>bliz.Active3dCursor()</code></pre>
                 </div>
             </section>
 
