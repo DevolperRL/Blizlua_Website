@@ -230,19 +230,21 @@
         </div>
         <div class="feature-card">
             <h3>Cross-Platform</h3>
-            <p>Supports Windows & Linux. Compatible with X-Plane 11/12</p>
+            <p>Supports Windows (MacOS and Linux will come soon). Compatible with X-Plane 11/12</p>
         </div>
     </section>
 
     <section class="download-section" id="download">
         <h2>Download BlizLua</h2>
-        <p>Version 1.0 B2.1 - Released May 2026</p>
+        <!--<p>Version 0.1 - Released April 2025</p>-->
+        <p>Version <span id="plugin-version">checking for updates...</span> - Released May 2026</p>
         
         <div class="requirements">
             <h3>System Requirements</h3>
             <ul>
                 <li>X-Plane 11 or 12</li>
-                <li>Windows 10+ & Linux</li>
+                <li>Windows 10+</li>
+                <li>4GB RAM minimum</li>
                 <li>50MB available storage</li>
             </ul>
         </div>
@@ -336,6 +338,77 @@
                 header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
             }
         });
+
+        async function fetchLatestVersion() {
+            const versionUrl = 'https://raw.githubusercontent.com/DevolperRL/BlizLua/refs/heads/main/version.txt';
+            const versionElement = document.getElementById('plugin-version');
+            const footerElement = document.getElementById('version-footer');
+            
+            // Show loading state
+            if (versionElement) {
+                versionElement.innerHTML = '<span class="loading-dots">Loading</span>';
+            }
+            
+            try {
+                console.log('Fetching version from:', versionUrl);
+                const response = await fetch(versionUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const text = await response.text();
+                console.log('Raw version text:', text);
+                
+                // Parse the content (format: "version: 1.0 B2.1")
+                let latestVersion = '';
+                const match = text.match(/version:\s*(.+)/i);
+                
+                if (match) {
+                    latestVersion = match[1].trim();
+                } else {
+                    // If no "version:" prefix, use the whole text
+                    latestVersion = text.trim();
+                }
+                
+                console.log('Parsed version:', latestVersion);
+                
+                // Update the HTML elements
+                if (versionElement) {
+                    versionElement.textContent = latestVersion;
+                }
+                
+                if (footerElement) {
+                    footerElement.textContent = `BlizLua v${latestVersion} - Latest release`;
+                }
+                
+                // Optional: Update download button text
+                const downloadBtn = document.getElementById('download-btn');
+                if (downloadBtn && !downloadBtn.innerHTML.includes(latestVersion)) {
+                    // You could add version to button if desired
+                    console.log(`Version ${latestVersion} loaded successfully`);
+                }
+                
+            } catch (error) {
+                console.error('Could not fetch the latest version:', error);
+                
+                // Fallback to default version
+                if (versionElement) {
+                    versionElement.textContent = '1.0 B2';
+                }
+                
+                if (footerElement) {
+                    footerElement.textContent = 'BlizLua - Check GitHub for latest version';
+                }
+                
+                // Show error in console but don't break the page
+                console.warn('Using fallback version due to fetch error');
+            }
+        }
+        
+        // Call the function when the page loads
+        fetchLatestVersion();
+
     </script>
 </body>
 </html>
