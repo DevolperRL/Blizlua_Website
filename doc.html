@@ -3902,6 +3902,45 @@ bliz.Log("ERROR", "Hello World")
                     <p>Disable wireframe mode and restore filled polygons.</p>
                     <pre><code>bliz.gl.DisableWireframe()</code></pre>
                 </div>
+
+                <div class="command-section" id="DrawTextureFBO">
+                    <h3>bliz.gl.DrawTextureFBO(x, y, width, height, textID)</h3>
+                    <p>Draws a texture from an FBO at the specified position and size. Useful for rendering dynamic content like cockpit displays, MFDs, or custom UI elements that need to be drawn as textures.</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>x</td>
+                            <td>float</td>
+                            <td>The X screen coordinate where the texture will be drawn</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td>float</td>
+                            <td>The Y screen coordinate where the texture will be drawn</td>
+                        </tr>
+                        <tr>
+                            <td>width</td>
+                            <td>float</td>
+                            <td>The width of the drawn texture in pixels</td>
+                        </tr>
+                        <tr>
+                            <td>height</td>
+                            <td>float</td>
+                            <td>The height of the drawn texture in pixels</td>
+                        </tr>
+                        <tr>
+                            <td>textID</td>
+                            <td>integer</td>
+                            <td>The texture ID obtained from a previously created FBO or texture</td>
+                        </tr>
+                    </table>
+                    <pre><code>bliz.gl.DrawTextureFBO(100, 100, 400, 300, myTextureID)</code></pre>
+                </div>
+
             </section>
 
             <section id="OpenAL">
@@ -5452,6 +5491,24 @@ is_wet, velocityX, velocityY, velocityZ = bliz.ProbeTerrainXYZ(10, 20, 30)</code
 
             <section id="Utils">
                 <h2>Utils</h2>
+
+                <div class="command-section" id="LoadAirport">
+                    <h3>bliz.LoadAirport(icao)</h3>
+                    <p>Loads airport data for the specified ICAO code and returns a table containing comprehensive airport information including runways, taxiways, frequencies, and metadata.</p>
+                    <table class="param-table">
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>icao</td>
+                            <td>string</td>
+                            <td>The 4-character ICAO airport code (e.g., "KJFK", "EGLL", "LFPG")</td>
+                        </tr>
+                    </table>
+                    <pre><code>local jfk = bliz.LoadAirport("KJFK")</code></pre>
+                </div>
 
                 <div class="command-section" id="CreateOwnManip">
                     <h3>bliz.CreateOwnManip(x, y, width, height, mousePath, func)</h3>
